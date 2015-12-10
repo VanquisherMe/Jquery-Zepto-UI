@@ -7,9 +7,10 @@
  *  switchDom:'.J_SwitchDom',                       切换的主体
  *  stateInit:0,                                    初始化显示
  *
- *  sliderBtn:true                                  左右控件
- *  sliderBtnStatus:[show：直接显示]                控件状态
+ * *  sliderBtnStatus:[show：直接显示]                控件状态
  *                  [fadeIn：直接显示]
+ *
+ *  sliderBtn:true                                  左右控件
  *  sliderBtnParent                                 左右控件-父元素
  *
  *  sliderNav:true,                                 滑动器导航
@@ -20,6 +21,7 @@
 
  */
 
+
 ;(function (factory) {
     if (typeof define === "function" && define.amd) {
         // AMD模式
@@ -28,61 +30,84 @@
         // 全局模式
         factory(jQuery);
     }
-}(function ($) {
+}(function ($ ,easing,undefined) {
 
-    var Slider = function(element , options){
-        this.element = $(element);
-        this.option=options;
-
-        this.len=this.element.find(this.option.switchDom).length;
-        //console.log(this.init)
-        this.init();
-    };
-    Slider.DEFAULTS={
-        /* dom 对象 集*/
-        handover_DOM:".handover_dom",  // [string]  具体切换的元素对象
-
-        /*插件 参数*/
-        stateInit:0,                   // [number]  初始化显示 的对象是第几个
-        sliderBtn:true                //  [number] 左右控件
-
-
-
+    var slider={
+        v: '1.0.1'
     };
 
 
-    Slider.prototype.init=function(){
-        var $elem = this.element,_op=this.option;
-        //console.log(this.sliderNav);
+
+    var slideClass = function(options){
+        var _this=this;
+        //获得当前设置的实际参数
+        this.option=  $.extend({}, slideClass.DEFAULTS, options || {});
+        //获得切换的个数
+
+        this.len=$(_this.retc(this.option.vessel)).find(_this.retc(this.option.handover_Dom)).length;
+
+        //初始化 组件配置
+        this.creat();
+    };
+
+
+    slideClass.DEFAULTS={
+        stateInit:0,                                            //   [number]  初始化显示 的对象是第几个
+        vessel:"slider-vessel",                                 //   [string]  包含元素
+        handover_Dom:"handover-dom",                            //   [string]  具体切换的元素对象
+
+        sliderBtn_Parent:false,                                 //   [Boole/string]  左右按钮的父级元素
+        slider_Btn:"slider-btn",                                 //   [Boole/string]  左右控件
+        slider_Btn_Next:"slider-btn-next",
+        slider_Btn_Prev:"slider-btn-prev",
+
+        slider_Nav:"slider-nav",                                 //   [Boole/string]  滑动器导航
+        slider_Nav_Parent:false,                                 //   [Boole/string]   滑动器导航-父元素
+        loop:false,
+        loopGap :1500
+    };
+
+    //返回 类字符串
+    slideClass.prototype.retc=function(str){
+        return '.'+str
+    };
+    //初始化 组件配置 方法
+    slideClass.prototype.creat=function(){
+        var _this=this, _op=this.option;
+
         //init 显示 初始显示
-        $elem.find(_op.switchDom).eq(_op.stateInit).show();
+        $(_this.retc(_op.vessel)).find(_this.retc(_op.handover_Dom)).eq(_op.stateInit)
+            .css({
+                display:"block",
+                zIndex:1
+            });
+
         //判断 是否添加 sliderNav
-        if(_op.sliderNav){
+        if(_op.slider_Nav){
             this.sliderNavFnc()
         }
-        //是否添加 左右切换控件
-        if(_op.sliderBtn){
+       /* //是否添加 左右切换控件
+        if(_op.slider_Btn){
             this.sliderBtnFnc()
         }
         //设置循环
         if(_op.loop){
             this.loopFnc()
-        }
+        }*/
 
     };
+    slideClass.prototype.sliderNavFnc=function(){
+        var _this=this,_op=this.option;
 
+        //如果存在 导航父级 就放在里面 如果不在就 插入到容器下
 
-    Slider.prototype.sliderNavFnc=function(){
-        var $this=this, $elem = this.element,_op=this.option;
+         var _len=this.len,
+             $sliderNav=this.sliderNavHTML( _len);
 
-        //如果存在 导航父级 就放在里面 如果不在就在放在 bnr域下
-        var _len=this.len,
-            $sliderNav=this.sliderNavHTML( _len);
-
-        if(_op.sliderNavParent){
-            $elem.find(_op.sliderNavParent).append($sliderNav)
+        if(_op.slider_Nav_Parent){
+            $(_this.retc(_op.vessel)).find(_this.retc(_op.slider_Nav_Parent)).append($sliderNav)
         }else{
-            $elem.append($sliderNav)
+            $(_this.retc(_op.vessel)).append($sliderNav)
         }
 
         //设置 $sliderNav 的宽度 保持居中
@@ -92,11 +117,11 @@
         $sliderNav.find('li').on("mouseover",function(){
             var nI=$(this).index();
             _op.stateInit = nI;
-            $this.viewSync();
+            _this.viewSync();
         })
 
     };
-    Slider.prototype.sliderBtnFnc=function(){
+    slideClass.prototype.sliderBtnFnc=function(){
         var $this=this, $elem = this.element,_op=this.option;
 
         var $sliderBtn =this.sliderBtnHTML();
@@ -144,7 +169,7 @@
     };
 
     //loop 循环
-    Slider.prototype.loopFnc=function(){
+    slideClass.prototype.loopFnc=function(){
         var $this=this, $elem = this.element,_op=this.option;
         //console.log(_op.loopGap)
         setloopInterval( $elem.Tim ,_op.loopGap)
@@ -174,7 +199,7 @@
     };
 
     //获得当前 索引
-    Slider.prototype.stateIndex=function(bol){
+    slideClass.prototype.stateIndex=function(bol){
         var _op=this.option,
             len= this.len,
             staI=_op.stateInit;
@@ -197,7 +222,7 @@
     };
 
     //同步 view
-    Slider.prototype.viewSync=function(){
+    slideClass.prototype.viewSync=function(){
         var $this=this, $elem = this.element,_op=this.option;
 
         //扩展 对应的参数 做出调整
@@ -209,23 +234,27 @@
     };
 
 
-
-    Slider.prototype.sliderNavHTML= function(len){
-        var strHTML='';
+    //滑动器 导航
+    slideClass.prototype.sliderNavHTML= function(len){
+        console.log(len)
+        var strHTML='',_op=this.option;
         for(var i=0; i<len; i++){
             strHTML+='<li></li>'
         }
-
-        return $('<ul class="J_sliderNav">'+strHTML+'</ul> ')
-    };
-    Slider.prototype.sliderBtnHTML= function(){
-
-        return $('<a class="sliderBtns sliderBtn-Prev "> < </a><a class="sliderBtns sliderBtn-Next "> > </a> ')
+        return $('<ul class="'+ _op.slider_Nav +'">'+strHTML+'</ul> ')
     };
 
+    slideClass.prototype.sliderBtnHTML= function(){
+        var _op=this.option;
+        return $('<a class="'+_op.slider_Btn+' '+ _op.slider_Btn_Prev +'"> < </a><a class="'+_op.slider_Btn+' '+_op.slider_Btn_Next +'"> > </a> ')
+    };
+    //添加 主入口 方法
+    slider.slide=function(deliver){
+        new slideClass(deliver);
+    };
 
 
-    return Slider
+    return slider
 }));
 
 

@@ -1,6 +1,7 @@
 /* jquery.v.slider  dependencies .css */
-
-
+.handover-dom{
+    display: none;
+}
 
 /* 1 demo */
 .js_cont{
