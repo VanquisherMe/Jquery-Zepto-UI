@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽奖</title>
+    <style type="text/css">
+        .active{
+            background-color: #2e8ded;
+        }
+    </style>
+</head>
+<body>
+    <button class="lottery">抽奖</button>
+    <span>奖品id</span><input id="jid"  />
+    <span>圈数</span><input id="circle" />
+    <ul class="gift">
+        <li data-id="a">a-0</li>
+        <li data-id="b">b-1</li>
+        <li data-id="c">c-2</li>
+        <li data-id="d">d-3</li>
+        <li data-id="e">e-4</li>
+        <li data-id="f">f-5</li>
+        <li data-id="g">g-6</li>
+        <li data-id="h">h-7</li>
+        <li data-id="i">i-8</li>
+        <li data-id="j">j-9</li>
+    </ul>
+    <script src="jquery.js"></script>
+
+    <script>
+        (function($){
+             var  Lottery =function(options){
+                    for(var x in options){
+
+                        if(options[x] == ""){
+                            console.log(x +"未设置")
+                            return
+                        }
+                    }
+
+                 this.option= options;
+
+                 this.len=$(this.option.dom).length;
+                 this.init()
+             };
+
+            Lottery.prototype.init =function(){
+                var _op=this.option,
+                    _len=this.len,
+                    _i=this.getSite($(_op.dom) , _op.id);
+
+                this.SyncView(0);
+
+                this.initValue=0;
+                this.time=0;
+                this.circleFnc((_len * _op.circle)+(_i+1))
+
+            };
+
+            //工具 得出当前位置
+            Lottery.prototype.getSite=function(_d , _n){
+                var nI;
+                _d.each(function(a){
+                    if($(this).attr("data-id") == _n){
+
+                        nI =a;
+                        return false
+                    }
+                });
+                return nI
+            };
+
+            Lottery.prototype.circleFnc=function(num){
+                var _this=this,_op=this.option, _len=this.len;
+                _op.time+=5;
+                console.log(_op.time)
+                if( num <= 0){
+                    _op.endCall()
+                    alert("你TM中奖了")
+                    console.log("结束")
+                    return false
+                }else{
+                    setTimeout(function(){
+                        if(_this.initValue >= _len ){
+                            _this.initValue = 0;
+                        }
+                        _this.SyncView(_this.initValue++);
+                        _this.circleFnc(--num)
+                    },_op.time)
+
+                }
+
+            };
+
+            Lottery.prototype.SyncView=function(i){
+                var _op=this.option;
+                $(_op.dom).eq(i).addClass(_op.active).siblings(_op.dom).removeClass(_op.active);
+            };
+            window.lottery=Lottery
+        })(jQuery);
+
+
+       $(function(){
+            console.log(lottery);
+
+           $(".lottery").data("state" , true).on("click",function(){
+               var $this=$(this);
+                if($(this).data("state") == true){
+                    $(this).data("state",false)
+                    new lottery({
+                        dom:".gift li",
+                        active:"active",
+                        id:$("#jid").val(),
+                        circle:$("#circle").val(),
+                        time:50,
+                        endCall:function(){
+                            $this.data("state",true)
+                        }
+                    });
+                }
+
+
+
+
+           });
+
+
+
+
+
+       })
+    </script>
+</body>
+</html>

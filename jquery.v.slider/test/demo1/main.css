@@ -1,22 +1,42 @@
 /* jquery.v.slider  dependencies .css */
-.handover-dom{
-    display: none;
-}
-
-/* 1 demo */
-.js_cont{
-    width: 100%;
-    height: 480px;
-}
-.js_cont .wrap{
+.slider-vessel{
     position: relative;
 }
-.js_cont .wrap li{
 
-    position: absolute;
+.slider-wrap{
+    position: relative;
     width: 100%;
-    height: 480px;
+    height: 350px;
 }
+.handover-dom{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 350px;
+}
+
+.slider-nav{
+
+    height: 15px;
+    background-color: #2E2D3C;
+    position:absolute;
+    z-index: 10;
+}
+.slider-nav li{
+    width: 15px;
+    height: 15px;
+    background-color: #2e8ded;
+    margin: 0 2px;
+    float: left;
+}
+.slider-nav li.active{
+    background-color: #009f95;
+}
+
+
+/* 1 demo */
+
 
 .js_cont .red{
     background-color: red;
@@ -26,4 +46,13 @@
 }
 .js_cont .orange{
     background-color: orange;
+}
+.js_cont .green{
+    background-color: green;
+}
+
+.js_cont .bnr{
+    display: block;
+    width: 970px;
+    margin: 0 auto;
 }

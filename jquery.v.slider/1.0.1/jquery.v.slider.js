@@ -79,7 +79,7 @@
         $(_this.retc(_op.vessel)).find(_this.retc(_op.handover_Dom)).eq(_op.stateInit)
             .css({
                 display:"block",
-                zIndex:1
+                zIndex:2
             });
 
         //判断 是否添加 sliderNav
@@ -97,7 +97,7 @@
 
     };
     slideClass.prototype.sliderNavFnc=function(){
-        var _this=this,_op=this.option;
+        var _this=this,_op=this.option,navW;
 
         //如果存在 导航父级 就放在里面 如果不在就 插入到容器下
 
@@ -109,9 +109,15 @@
         }else{
             $(_this.retc(_op.vessel)).append($sliderNav)
         }
-
+            navW=   $sliderNav.find('li').outerWidth(true)*_len;
         //设置 $sliderNav 的宽度 保持居中
-        $sliderNav.css({width:$sliderNav.find('li').outerWidth(true)*_len})
+        $sliderNav
+            .css({
+                width :navW,
+                marginLeft:-navW/2,
+                bottom:"10px",
+                left  :"50%"
+                })
             .find('li').eq(_op.stateInit).addClass('active');
         //event
         $sliderNav.find('li').on("mouseover",function(){
@@ -223,13 +229,18 @@
 
     //同步 view
     slideClass.prototype.viewSync=function(){
-        var $this=this, $elem = this.element,_op=this.option;
+        var _this=this,_op=this.option;
 
         //扩展 对应的参数 做出调整
-        $elem.find(_op.switchDom).eq(_op.stateInit).stop().fadeIn(1200).siblings(_op.switchDom).stop().fadeOut(300);
+        $(_this.retc(_op.vessel)).find(_this.retc(_op.handover_Dom)).eq(_op.stateInit)
+            .css({zIndex:2})
+            .stop().fadeIn(1200).siblings(_this.retc(_op.handover_Dom))
+            .css({zIndex:1}).stop().fadeOut(300);
 
-        if(_op.sliderNav){
-            $elem.find('.J_sliderNav li').eq(_op.stateInit).addClass('active').siblings('li').removeClass('active');
+        if(_op.slider_Nav){
+            $(_this.retc(_op.vessel))
+                .find(_this.retc(_op.slider_Nav))
+                .find('li').eq(_op.stateInit).addClass('active').siblings('li').removeClass('active');
         }
     };
 
