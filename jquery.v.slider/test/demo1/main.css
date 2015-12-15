@@ -17,9 +17,7 @@
 }
 
 .slider-nav{
-
     height: 15px;
-    background-color: #2E2D3C;
     position:absolute;
     z-index: 10;
 }
@@ -29,14 +27,36 @@
     background-color: #2e8ded;
     margin: 0 2px;
     float: left;
+    border-radius: 50%;
 }
 .slider-nav li.active{
-    background-color: #009f95;
+    background-color: red;
 }
 
+.sliderBtn_wrap{
+    position: absolute;
+    left: 50%;
+    top:0;
+
+}
+
+.slider-btn{
+    position: absolute;
+    z-index: 10;
+    width: 50px;
+    height: 100px;
+    background-color: #2E2D3C;
+    display: none;
+    cursor: pointer;
+}
+.slider-btn-prev{
+    left: 0;
+}
+.slider-btn-next{
+    right: 0;
+}
 
 /* 1 demo */
-
 
 .js_cont .red{
     background-color: red;

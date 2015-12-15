@@ -40,6 +40,7 @@
 
     var slideClass = function(options){
         var _this=this;
+        _this.clickState=true
         //获得当前设置的实际参数
         this.option=  $.extend({}, slideClass.DEFAULTS, options || {});
         //获得切换的个数
@@ -53,10 +54,13 @@
 
     slideClass.DEFAULTS={
         stateInit:0,                                            //   [number]  初始化显示 的对象是第几个
+        sliderBtn_Wrap_w:"auto",
         vessel:"slider-vessel",                                 //   [string]  包含元素
         handover_Dom:"handover-dom",                            //   [string]  具体切换的元素对象
 
+
         sliderBtn_Parent:false,                                 //   [Boole/string]  左右按钮的父级元素
+        sliderBtn_Wrap:"sliderBtn_wrap",
         slider_Btn:"slider-btn",                                 //   [Boole/string]  左右控件
         slider_Btn_Next:"slider-btn-next",
         slider_Btn_Prev:"slider-btn-prev",
@@ -86,21 +90,20 @@
         if(_op.slider_Nav){
             this.sliderNavFnc()
         }
-       /* //是否添加 左右切换控件
+       //是否添加 左右切换控件
         if(_op.slider_Btn){
             this.sliderBtnFnc()
         }
         //设置循环
-        if(_op.loop){
+         if(_op.loop){
             this.loopFnc()
-        }*/
+        }
 
     };
     slideClass.prototype.sliderNavFnc=function(){
         var _this=this,_op=this.option,navW;
 
         //如果存在 导航父级 就放在里面 如果不在就 插入到容器下
-
          var _len=this.len,
              $sliderNav=this.sliderNavHTML( _len);
 
@@ -121,86 +124,86 @@
             .find('li').eq(_op.stateInit).addClass('active');
         //event
         $sliderNav.find('li').on("mouseover",function(){
-            var nI=$(this).index();
-            _op.stateInit = nI;
-            _this.viewSync();
+            //_op.stateInit = $(this).index();
+            _this.viewSync($(this).index());
         })
 
     };
     slideClass.prototype.sliderBtnFnc=function(){
-        var $this=this, $elem = this.element,_op=this.option;
+        var _this=this,_op=this.option,$v=$(_this.retc(_op.vessel));
 
-        var $sliderBtn =this.sliderBtnHTML();
-        if(_op.sliderBtnParent){
+        var $sliderBtnWrap =_this.sliderBtnHTML(),$sliderBtn=$sliderBtnWrap.find(_this.retc(_op.slider_Btn));
+        if(_op.slider_Nav_Parent){
             //console.log( _elem.find(_op.sliderBtnParent))
-            $elem.find(_op.sliderBtnParent).append($sliderBtn)
+            $v.find(_this.retc(_op.slider_Nav_Parent)).append($sliderBtnWrap)
         }else{
-            $elem.append($sliderBtn)
+            console.log($v.height()/2-$sliderBtnWrap.outerHeight(true)/2)
+            $v.append($sliderBtnWrap);
+            $sliderBtnWrap.css({
+                position: "absolute",
+                width:_op.sliderBtn_Wrap_w,
+                marginLeft:-_op.sliderBtn_Wrap_w/2,
+                left:"50%",
+                top:$v.height()/2-$sliderBtn.outerHeight(true)/2
+            })
         }
-
-        //计算位置
-        $sliderBtn.css({top:$elem.height()/2-$sliderBtn.outerHeight(true)/2});
         //event
         //判断 btn  的状态
-        if(_op.sliderBtnStatus == "show"){
-            $sliderBtn.css({display:'block'})
-        }
 
-        if(_op.sliderBtnStatus == "fadeIn"){
-            $elem.hover(function(){
-                    $sliderBtn.fadeIn()
-                },
-                function(){
-                    $sliderBtn.fadeOut()
-                });
-        }
-
-
-
-        $elem.find('.sliderBtn-Prev').on("click",function(){
-            $this.stateIndex(false);
-            //console.log(_op.stateInit)
-            $this.viewSync();
+        $v.on("mouseover",function(){
+            $sliderBtn.show()
         });
 
-        $elem.find('.sliderBtn-Next').on("click",function(){
-            $this.stateIndex(true);
-            //console.log(_op.stateInit)
-            $this.viewSync();
+        $v.on("mouseleave",function(){
+            $sliderBtn.hide()
+        });
+
+
+
+        $v.find(_this.retc(_op.slider_Btn_Prev)).on("click",function(e){
+            e.preventDefault()
+            if(_this.clickState){
+                _this.clickState=false
+                _this.stateIndex(false);
+                //_this.viewSync();
+            }
+            e.stopPropagation()
+            return false
+        });
+
+        $v.find(_this.retc(_op.slider_Btn_Next)).on("click",function(e){
+            e.preventDefault()
+            if(_this.clickState){
+                _this.clickState=false
+                _this.stateIndex(true);
+                //_this.viewSync();
+            }
+            e.stopPropagation()
+            return false
         })
-
-
-
 
     };
 
     //loop 循环
     slideClass.prototype.loopFnc=function(){
-        var $this=this, $elem = this.element,_op=this.option;
+        var _this=this,_op=this.option,$v=$(_this.retc(_op.vessel));
         //console.log(_op.loopGap)
-        setloopInterval( $elem.Tim ,_op.loopGap)
+        setloopInterval( _this.Tim ,_op.loopGap)
+        $v.on("mouseover",function(){
+            clearInterval(_this.Tim)
+        });
 
-        $elem.hover(function(){
-                clearInterval($elem.Tim)
-            },
-            function(){
-
-                setloopInterval( $elem.Tim ,_op.loopGap)
-                /* $elem.Tim=setInterval(function(){
-                 setloop()
-                 },_op.loopGap);*/
-            });
+        $v.on("mouseleave",function(){
+            setloopInterval( _this.Tim ,_op.loopGap)
+        });
 
         function setloopInterval(_tim , _loopGap){
-            $elem.Tim=setInterval(function(){
-                setloop()
+            _this.Tim=setInterval(function(){
+                _this.stateIndex(true);
             },_op.loopGap);
         }
 
-        function setloop(){
-            $this.stateIndex(true);
-            $this.viewSync();
-        }
+
 
     };
 
@@ -223,25 +226,29 @@
             }
 
         }
-        _op.stateInit=staI;
-
+        //_op.stateInit=staI;
+        this.viewSync(staI);
     };
 
     //同步 view
-    slideClass.prototype.viewSync=function(){
+    slideClass.prototype.viewSync=function(i){
         var _this=this,_op=this.option;
 
+        _op.stateInit=i;
         //扩展 对应的参数 做出调整
         $(_this.retc(_op.vessel)).find(_this.retc(_op.handover_Dom)).eq(_op.stateInit)
             .css({zIndex:2})
-            .stop().fadeIn(1200).siblings(_this.retc(_op.handover_Dom))
-            .css({zIndex:1}).stop().fadeOut(300);
+            .stop().fadeIn(600,function(){
+            _this.clickState=true
+        }).siblings(_this.retc(_op.handover_Dom))
+            .css({zIndex:1}).stop().fadeOut(360);
 
         if(_op.slider_Nav){
             $(_this.retc(_op.vessel))
                 .find(_this.retc(_op.slider_Nav))
                 .find('li').eq(_op.stateInit).addClass('active').siblings('li').removeClass('active');
         }
+
     };
 
 
@@ -257,7 +264,7 @@
 
     slideClass.prototype.sliderBtnHTML= function(){
         var _op=this.option;
-        return $('<a class="'+_op.slider_Btn+' '+ _op.slider_Btn_Prev +'"> < </a><a class="'+_op.slider_Btn+' '+_op.slider_Btn_Next +'"> > </a> ')
+        return $('<div class="'+_op.sliderBtn_Wrap+'"><a class="'+_op.slider_Btn+' '+ _op.slider_Btn_Prev +'"></a><a class="'+_op.slider_Btn+' '+_op.slider_Btn_Next +'"></a></div> ')
     };
     //添加 主入口 方法
     slider.slide=function(deliver){
