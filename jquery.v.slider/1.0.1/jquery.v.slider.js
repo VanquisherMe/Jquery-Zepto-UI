@@ -238,10 +238,10 @@
         //扩展 对应的参数 做出调整
         $(_this.retc(_op.vessel)).find(_this.retc(_op.handover_Dom)).eq(_op.stateInit)
             .css({zIndex:2})
-            .stop().fadeIn(600,function(){
+            .stop().fadeIn(400,function(){
             _this.clickState=true
         }).siblings(_this.retc(_op.handover_Dom))
-            .css({zIndex:1}).stop().fadeOut(360);
+            .css({zIndex:1}).fadeOut(300)
 
         if(_op.slider_Nav){
             $(_this.retc(_op.vessel))
