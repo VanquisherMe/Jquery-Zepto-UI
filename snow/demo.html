@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>snow</title>
+</head>
+<style>
+    body{
+        background-color: #2E2D3C;
+        height: 2000px;;
+    }
+</style>
+<body>
+
+    <button>aaaaa</button>
+    <!--<script src="moo.js"></script>-->
+    <script src="jquery.js"></script>
+    <script src="ThreeCanvas.js"></script>
+    <script src="Snow.js"></script>
+<script>
+
+
+  $(function(){
+
+
+//        isCanvasSupported()
+        if(isCanvasSupported){
+            var SCREEN_WIDTH = window.innerWidth;
+            var SCREEN_HEIGHT = window.innerHeight;
+
+            var container;
+
+            var particle;
+
+            var camera;
+            var scene;
+            var renderer;
+
+            var mouseX = 0;
+            var mouseY = 0;
+
+            var windowHalfX = window.innerWidth / 2;
+            var windowHalfY = window.innerHeight / 2;
+
+            var particles = [];
+            var particleImage = new Image();//THREE.ImageUtils.loadTexture( "img/ParticleSmoke.png" );
+            particleImage.src = "http://img4.helper-sys.com/public/app/active/statics/images/active151225/index/particle_smoke.png";
+
+            init();
+        }
+
+
+        function isCanvasSupported(){
+            var elem = document.createElement('canvas');
+            return !!(elem.getContext && elem.getContext('2d'));
+        }
+
+        function init() {
+
+            container = document.createElement('div');
+            container.style.cssText = "position:fixed;top:0;left:0;pointer-events:none;";
+            document.body.appendChild(container);
+
+            camera = new THREE.PerspectiveCamera( 75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
+            camera.position.z = 1000;
+
+            scene = new THREE.Scene();
+            scene.add(camera);
+
+            renderer = new THREE.CanvasRenderer();
+            renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+            var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture(particleImage) } );
+
+            for (var i = 0; i < 150; i++) {
+
+                particle = new Particle3D( material);
+                particle.position.x = Math.random() * 2000 - 1000;
+                particle.position.y = Math.random() * 2000 - 1000;
+                particle.position.z = Math.random() * 2000 - 1000;
+                particle.scale.x = particle.scale.y =  1;
+                scene.add( particle );
+
+                particles.push(particle);
+            }
+
+            container.appendChild( renderer.domElement );
+
+            setInterval( loop, 1000 / 30 );
+
+        }
+        //
+
+        function loop() {
+
+            for (var i = 0; i < particles.length; i++) {
+
+                var particle = particles[i];
+                particle.updatePhysics();
+
+                with(particle.position) {
+                    if (y < -1000) y += 2000;
+                    if (x > 1000) x -= 2000;
+                    else if (x < -1000) x += 2000;
+                    if (z > 1000) z -= 2000;
+                    else if (z < -1000) z += 2000;
+                }
+            }
+
+            camera.position.x += (mouseX - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+
+
+        }
+
+
+    });
+
+
+
+</script>
+</body>
+</html>

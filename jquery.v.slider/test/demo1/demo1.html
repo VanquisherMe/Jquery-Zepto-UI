@@ -8,7 +8,6 @@
 
 </head>
 <body>
-
     <div class="slider-vessel js_cont">
         <ul class="slider-wrap">
             <li  class="handover-dom red"><a class="bnr" href="#"><img src="img/得力办公(banner).jpg"/></a></li>
@@ -18,14 +17,23 @@
         </ul>
     </div>
 
-
+    <canvas class="snow" height="632" width="1920"></canvas>
     <script  src="../../../public/require.js"></script>
     <script  src="../../../mainConfig.js"></script>
+    <script src="../../../public/jquery.js"></script>
+    <script src="../../../public/jquery.let_it_snow.js"></script>
+        <script>
+            $(document).ready( function() {
+                $("canvas.snow").let_it_snow({
+                    speed: 1,
+                    size: 15,
+                    count: 26,
+                    image: "../../../public/snowflake.png"
+                });
+            });
+        </script>
     <script>
         requirejs(['main.js'])
-    </script>
-    <script>
-
     </script>
 </body>
 </html>

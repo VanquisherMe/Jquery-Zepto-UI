@@ -13,4 +13,6 @@ requirejs(['jquery','jquery.v.slider',"public/layer/layer"],function($,slider,la
     });
    console.log(layer)
     layer.msg('玩命提示中');
+
+
 });
