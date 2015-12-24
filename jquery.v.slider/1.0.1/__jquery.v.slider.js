@@ -162,23 +162,16 @@
 
         $v.find(_this.retc(_op.slider_Btn_Prev)).on("click",function(e){
             e.preventDefault()
-            if(_this.clickState){
-                _this.clickState=false
-                _this.stateIndex(false);
-                //_this.viewSync();
-            }
-            e.stopPropagation()
-            return false
+            _this.clickState ||( _this.clickState=!0,
+                _this.stateIndex(false),
+                e.stopPropagation())
         });
 
         $v.find(_this.retc(_op.slider_Btn_Next)).on("click",function(e){
             e.preventDefault()
-            if(_this.clickState){
-                _this.clickState=false
-                _this.stateIndex(true);
-                //_this.viewSync();
-            }
-            e.stopPropagation()
+            _this.clickState ||( _this.clickState=!0,
+                _this.stateIndex(true),
+                e.stopPropagation())
             return false
         })
 
@@ -235,13 +228,23 @@
         var _this=this,_op=this.option;
 
         _op.stateInit=i;
+        setTimeout(function() {
+                _this.clickState = !1
+            }
+            , 400);
+
+
         //扩展 对应的参数 做出调整
         $(_this.retc(_op.vessel)).find(_this.retc(_op.handover_Dom)).eq(_op.stateInit)
-            .css({zIndex:2})
-            .stop().fadeIn(400,function(){
-            _this.clickState=true
-        }).siblings(_this.retc(_op.handover_Dom))
-            .css({zIndex:1}).fadeOut(300)
+            .css({zIndex:2}).stop(!0).animate({
+            opacity: 1
+        }, 400, "swing").siblings(_this.retc(_op.handover_Dom))
+            .css({zIndex:1}).stop(!0).animate({
+                opacity: 0
+            }, 400, "swing", function() {
+                $(this).css("opacity", 0)
+            }
+        );
 
         if(_op.slider_Nav){
             $(_this.retc(_op.vessel))
