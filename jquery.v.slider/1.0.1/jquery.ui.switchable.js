@@ -39,13 +39,19 @@
             mouseenterStopPlay: !0, //鼠标进入停滞播放
             playDirection: "next", //播放的方向
 
+            event: "mouseover", // 鼠标移入navItem 的事件
+            speed: 400,         // 动画播放的时间
+            callback: null ,
+            onNext: null ,
+            onPrev: null ,
 
-            speed: 400,
-           callback: null ,
-           onNext: null ,
-           onPrev: null ,
-            delay: 150,
-            defaultPanel: 0, //默认面板 初始索引
+            delay: 150,         //关于自播放 延时时间
+            defaultPanel: 0,    //默认面板 初始索引
+
+            stayTime:5e3, //停留时间
+
+            includeMargin:!1 //计算 元素 单位的时候 是否计算 margin 值
+
     };
 
     // Switchable plugin definition
