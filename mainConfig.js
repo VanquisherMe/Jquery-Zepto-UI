@@ -9,7 +9,7 @@ requirejs.config({
     "paths": {
         "jquery": "public/jquery",
         "jquery.easing":"public/jquery.easing",
-        "jquery.v.slider":"jquery.v.slider/1.0.1/jquery.v.slider"
+        "jquery.v.switchable":"jquery.v.slider/1.0.1/jquery.ui.switchable"
 
         //"layer":"public/layer/layer"
 

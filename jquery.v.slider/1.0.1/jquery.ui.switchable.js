@@ -12,10 +12,12 @@
     }
 }(function ($ ,undefined) {
     var Switchable=function(element , options){
-        this.element = $(element);
-        this.option=options;
+        var _this=this;
+        _this.element = $(element);
+        _this.option=options;
+        _this.init();
     };
-   Switchable.DEFAULTS={
+    Switchable.DEFAULTS={
             baseVersion: "1.0.0",  //版本
             cssLinkVersion: "1.0.0",//css 版本
             type:"tab",//类型
@@ -46,11 +48,22 @@
             onPrev: null ,
 
             delay: 150,         //关于自播放 延时时间
-            defaultPanel: 0,    //默认面板 初始索引
+            defaultPanel: 0,    //默认面板 初始索引 [索引值]
 
             stayTime:5e3, //停留时间
 
-            includeMargin:!1 //计算 元素 单位的时候 是否计算 margin 值
+            includeMargin:!1, //计算 元素 单位的时候 是否计算 margin 值
+
+           width: 0,
+           height: 0,
+           seamlessLoop: !1, //无缝循环
+            step: 1,
+            visible: 1,
+            easing: "swing",
+            hasLoop: !1
+    };
+    Switchable.prototype.init =function(){
+
 
     };
 

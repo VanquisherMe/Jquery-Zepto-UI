@@ -57,8 +57,10 @@
 }
 
 /* 1 demo */
+.marginCont{}
 
 .js_cont .red{
+
     background-color: red;
 }
 .js_cont .blue{

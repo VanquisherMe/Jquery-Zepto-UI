@@ -268,6 +268,7 @@
                         b.el.find("." + d).stop(!0).animate({
                             left: e
                         }, c.speed, c.easing)
+
             }
             b.isInit = !1
         },
