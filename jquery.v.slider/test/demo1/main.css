@@ -1,11 +1,37 @@
 /* jquery.v.slider  dependencies .css */
-.slider-vessel{
+.focus-demo-01{
     position: relative;
 }
+
+.focus-demo-01 .focus-wrap{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*=====================================================================*/
+
 
 .slider-wrap{
     position: relative;
     width: 100%;
+    min-width:970px;
     height: 350px;
 }
 .handover-dom{
@@ -57,24 +83,34 @@
 }
 
 /* 1 demo */
-.marginCont{}
 
-.js_cont .red{
+
+.marginCont{
+
+    margin: 30px auto;
+}
+
+.js_cont_01 .red{
 
     background-color: red;
 }
-.js_cont .blue{
+.js_cont_01 .blue{
     background-color: #4898d5;
 }
-.js_cont .orange{
+.js_cont_01 .orange{
     background-color: orange;
 }
-.js_cont .green{
+.js_cont_01 .green{
     background-color: green;
 }
 
-.js_cont .bnr{
+.js_cont_01 .bnr{
     display: block;
     width: 970px;
     margin: 0 auto;
+}
+
+
+.js_cont_02{
+
 }

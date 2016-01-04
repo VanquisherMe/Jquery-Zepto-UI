@@ -17,9 +17,8 @@
         _this.option=options;
         _this.init();
     };
+    Switchable.VERSION = '1.0.0';
     Switchable.DEFAULTS={
-            baseVersion: "1.0.0",  //版本
-            cssLinkVersion: "1.0.0",//css 版本
             type:"tab",//类型
             direction: "left",// 布局方向
 
@@ -36,6 +35,7 @@
 
              prevClass: "ui-switchable-prev", //上一页
              nextClass: "ui-switchable-next",  // 下一页
+            sliderPage:"slider-page",
 
             autoPlay:!1, //是否自动播放
             mouseenterStopPlay: !0, //鼠标进入停滞播放
@@ -63,9 +63,44 @@
             hasLoop: !1
     };
     Switchable.prototype.init =function(){
+        var _this = this,_op = _this.options;
 
 
     };
+    //切换入口
+    Switchable.prototype.switchTo=function(){};
+    Switchable.prototype.switchNavTo=function(){};
+    Switchable.prototype.switchMainTo=function(){};
+    //切换类型
+    Switchable.prototype.switchType=function(){
+        var _this = this,_op = _this.options;
+        switch (_op.type) {
+            case "tab":
+                _this.tab(a);
+                break;
+            case "focus":
+                _this.focus(a);
+                break;
+            case "slider":
+                _this.slider(a);
+                break;
+/*            case "carousel":
+                _this.carousel(a);
+                break;
+            case "imgscroll":
+                _this.imgscroll(a)*/
+            default:
+                //选择类型有误
+              console.log("\u9009\u62e9\u7c7b\u578b\u6709\u8bef");
+        }
+    };
+
+    //效果层
+    Switchable.prototype.tab=function(){};
+    Switchable.prototype.focus=function(){};
+    Switchable.prototype.slider=function(){};
+    Switchable.prototype.carousel=function(){};
+    Switchable.prototype.imgscroll=function(){};
 
     // Switchable plugin definition
     // =====================
