@@ -1,31 +1,49 @@
 /* jquery.v.slider  dependencies .css */
 .focus-demo-01{
     position: relative;
-}
-
-.focus-demo-01 .focus-wrap{
 
 }
 
+.focus-demo-01 .focus-main{
+    position: relative;
+    width: 100%;
+    min-width:970px;
+    height: 350px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+.focus-demo-01 .focus-main li.focus-panel{
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 350px;
+}
 
 
 
 
 /*=====================================================================*/
+
+.bnr{
+    display: block;
+    width: 970px;
+    margin: 0 auto;
+}
+.red{
+
+    background-color: red;
+}
+.blue{
+    background-color: #4898d5;
+}
+.orange{
+    background-color: orange;
+}
+.green{
+    background-color: green;
+}
+
+/*=====================================================================*/
+
 
 
 .slider-wrap{
@@ -90,17 +108,17 @@
     margin: 30px auto;
 }
 
-.js_cont_01 .red{
+ .red{
 
     background-color: red;
 }
-.js_cont_01 .blue{
+ .blue{
     background-color: #4898d5;
 }
-.js_cont_01 .orange{
+.orange{
     background-color: orange;
 }
-.js_cont_01 .green{
+ .green{
     background-color: green;
 }
 
