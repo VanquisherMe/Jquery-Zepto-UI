@@ -1,14 +1,12 @@
 /* jquery.v.slider  dependencies .css */
 .focus-demo-01{
-    position: relative;
 
+    height: 350px;
 }
 
 .focus-demo-01 .focus-main{
     position: relative;
-    width: 100%;
-    min-width:970px;
-    height: 350px;
+
 }
 
 .focus-demo-01 .focus-main li.focus-panel{
@@ -18,9 +16,39 @@
     height: 350px;
 }
 
+.focus-demo-01 .focus-extra{
+    position: relative;
+    width: 970px;
+    height: 350px;
+    margin: 0 auto;
+}
+.focus-demo-01 .focus-nav{
+    top:320px;
+    width: 530px;
+    height: 0;
+    line-height: 0;
+    left: 210px;
+    text-align: center;
+    position: absolute;
+}
+.focus-demo-01 .focus-nav li {
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    display: inline-block;
+    margin: 0 2px;
+    background: #3e3e3e;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
+}
 
-
-
+.focus-demo-01 .focus-nav li.focus-active{
+    background: #b61b1f;
+    color: #fff;
+}
 /*=====================================================================*/
 
 .bnr{

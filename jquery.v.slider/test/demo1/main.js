@@ -7,7 +7,14 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
 
     $(".focus-demo-01").switchable({
         contentClass:"focus-main",
-        mainClass:"focus-panel"
+        mainClass:"focus-panel",
+        bodyExtra:"focus-extra",
+        navClass:"focus-nav",
+        navItem:"focus-item",
+        prevClass:"focus-prev",
+        nextClass:"focus-next",
+        navSelectedClass:"focus-active"
+
     })
 
 });

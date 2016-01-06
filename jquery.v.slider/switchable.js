@@ -118,12 +118,10 @@
                                             b.switchTo(d, c.seamlessLoop ? d + b.cloneCount : d)
                                     }
                                     , c.delay)))
-                        }
-                    ).bind("mouseleave", function() {
+                        }).bind("mouseleave", function() {
                             clearTimeout(b.eventTimer),
                             c.mouseenterStopPlay || b.autoPlay()
-                        }
-                    ),
+                        }),
                     "click" == c.event && e.bind("mouseover", function() {
                             clearTimeout(b.eventTimer),
                                 clearInterval(b.autoInterval)
