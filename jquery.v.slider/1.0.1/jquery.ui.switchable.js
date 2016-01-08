@@ -5,28 +5,28 @@
 !(function (factory) {
     if (typeof define === "function" && define.amd) {
         // AMD模式
-        define("jquery.ui.switchable",[ "jquery"], factory);
+        define("jquery.ui.switchable",[ "jquery","public/jquery.easing"], factory);
     } else {
         // 全局模式
         factory(jQuery);
     }
-}(function ($ ,undefined) {
+}(function ($ ,easing,undefined) {
     var Switchable=function(element , options){
 
-        var _this=this,_op,$navItem="",$navClass,$contentPage="",$bodyExtra;
+        var _this=this,_op,计数器,$navItem="",$navClass,$contentPage="",$bodyExtra,idefaultPanel;
         _this.el = $(element);
-        _op=_this.option=  $.extend({}, Switchable.DEFAULTS, options || {});
-        _this.len =_this.el.find("."+_op.mainClass).size();
+        _op=_this.options=  $.extend({}, Switchable.DEFAULTS, options || {});
+        _this.main = _this.el.find("." + _op.mainClass);
+        _this.len =_this.main.size();
+        _this.content = _this.el.find("." + _op.contentClass);
 
-        //自动播放定时器
-        _this.autoInterval = null;
-        //延时触发
-        _this.eventTimer = null;
 
         //判断 是否 有  nav
+
         if(_op.navClass){
+
             for(var i=0; i<_this.len; i++){
-                $navItem += '<li class="'+ _op.navItem + ("0" == i ? " "+_op.navSelectedClass : "")+'">' + (_op.step ?_op.step++ : "")+'</li>';
+                $navItem += '<li class="'+ _op.navItem + ("0" == i ? " "+_op.navSelectedClass : "")+'">' + (_op.counter ?_op.counter++ : "")+'</li>';
             }
             $navClass='<ul class="'+ _op.navClass +'">'+ $navItem +'</ul>';
 
@@ -41,10 +41,23 @@
         _this.el.append($bodyExtra);
         //初始化 完成
         _this.nav = _this.el.find("." + _op.navItem);
+        idefaultPanel=_op.defaultPanel;
 
-        console.log(_this.nav)
+        //记录 上次一次的 索引
+        _this.last = idefaultPanel;
+        //初始当前值
+        _this.current = idefaultPanel;
+        //将面板 初始化到 正确的面板上
+        _this.isInit = !0;
+        _this.switchTo(idefaultPanel);
 
+        //自动播放定时器
+        _this.autoInterval = null;
+        //延时触发
+        _this.eventTimer = null;
 
+        _this.eventBind();
+        _this.autoPlay();
     };
     Switchable.VERSION = '1.0.0';
     Switchable.DEFAULTS={
@@ -69,7 +82,7 @@
             bodyExtra: false, //"ui-switchable-extra"
 
 
-            autoPlay:!1, //是否自动播放
+            isAutoPlay:!1, //是否自动播放
             mouseenterStopPlay: !0, //鼠标进入停滞播放
             playDirection: "next", //播放的方向
 
@@ -86,31 +99,46 @@
            width: 0,
            height: 0,
            seamlessLoop: !1, //无缝循环
-            step: 1, // 步数 索引初始值
-            visible: 1,
+            step: 1,        //  每次走的 步数
+            //visible: 1,
             easing: "swing",
             hasLoop: !1,
-
-            callback: null ,
+            counter:1, // 索引 计数器
+             callback: null ,
             onNext: null ,
             onPrev: null ,
     };
     Switchable.prototype.eventBind=function(){
         var _this = this,_op = _this.options;
+
         //鼠标 移入 nav 的 时候
-        _this.nav.on(_this.event,function(){
-            var $current= $(this)
+        (_op.navClass && _this.nav) && ( _this.nav.on(_op.event,function(){
+            var $current= $(this);
             clearInterval( _this.autoInterval );
             //当前移入的 元素 记录在 current
             0 === _op.delay ? (_this.current = $current.index(),
                 _this.switchTo(_this.current)):(clearTimeout(_this.eventTimer),
                 _this.eventTimer = setTimeout(function() {
-                        b.current =  $current.index(),
+                    _this.current =  $current.index();
                             _this.switchTo(_this.current)
-                    }
-                    , _op.delay));
+                    }, _op.delay));
 
-        })
+        }).on("mouseleave",function(){
+            clearTimeout(_this.eventTimer);
+            _op.mouseenterStopPlay || _this.autoPlay()
+        }));
+        // 如果 event 是 click
+
+        //鼠标 移入 切换 面板
+        _op.mouseenterStopPlay && (_this.el.on("mouseenter", function() {
+                clearInterval(_this.autoInterval)
+            }).on("mouseleave", function() {
+
+                _this.autoPlay();
+
+            }));
+            _this.page()
+
     };
     //切换入口
     Switchable.prototype.switchTo=function(i){
@@ -118,30 +146,39 @@
         if ("undefined" == typeof i){
             console.log("\u7d22\u5f15\u4e0d\u662f\u4e00\u4e2a\u6570\u5b57")
 
+        }else{
+            _this.switchNavTo(i);
+                 _this.switchMainTo(i)
         }
-
-        _this.switchNavTo(i);
-            _this.switchMainTo(i)
 
     };
     Switchable.prototype.switchNavTo=function(i){
+        var _this = this,_op = _this.options;
+
+        _this.nav.removeClass(_op.navSelectedClass);
+            _this.nav.eq(i).addClass(_op.navSelectedClass)
 
     };
     Switchable.prototype.switchMainTo=function(i){
+        var _this = this,_op = _this.options;
+        if(_this.switchType(i),(null  != _op.callback)){
 
+            _op.callback.call(_this);
+        }
+        _this.last = i;
     };
     //切换类型
-    Switchable.prototype.switchType=function(){
+    Switchable.prototype.switchType=function(i){
         var _this = this,_op = _this.options;
         switch (_op.type) {
             case "tab":
-                _this.tab(a);
+                _this.tab(i);
                 break;
             case "focus":
-                _this.focus(a);
+                _this.focus(i);
                 break;
             case "slider":
-                _this.slider(a);
+                _this.slider(i);
                 break;
 /*            case "carousel":
                 _this.carousel(a);
@@ -156,10 +193,95 @@
 
     //效果层
     Switchable.prototype.tab=function(){};
-    Switchable.prototype.focus=function(){};
+    Switchable.prototype.focus=function(i){
+        var _this = this,_op = _this.options;
+
+        _this.isInit ? (_this.main.parent().css({
+            position: "relative"
+        }),
+            _this.main.css({
+                position: "absolute",
+                zIndex: 0,
+                opacity: 0
+            }).show(),
+            _this.main.eq(i).css({
+                zIndex: 1,
+                opacity: 1
+            }),
+            _op.isPlayLock = !1) : (setTimeout(function() {
+                _op.isPlayLock = !1
+            }
+            , _op.speed),
+            _this.main.eq(_this.last).css({
+                zIndex: 0
+            }).stop(!0).animate({
+                    opacity: 1
+                }, _op.speed, _op.easing, function() {
+                    $(this).css("opacity", 0)
+                }
+            )),
+            _this.main.eq(i).css({
+                zIndex: 1
+            }).stop(!0).animate({
+                opacity: 1
+            }, _op.speed, _op.easing),
+            _this.isInit = !1
+
+    };
     Switchable.prototype.slider=function(){};
     Switchable.prototype.carousel=function(){};
     Switchable.prototype.imgscroll=function(){};
+
+    //事件
+    Switchable.prototype.page=function(){
+        var _this = this,_op = _this.options,$prevClass = _this.el.find("." + _op.prevClass),$nextClass = _this.el.find("." + _op.nextClass);
+        $prevClass.on("click", function(e) {
+                _op.isPlayLock && _this.content && _this.content.length > 0  || (_op.isPlayLock = !0,
+                    _this.prev(),
+                    e.stopPropagation())
+            }
+        );
+            $nextClass.on("click", function(e) {
+                _op.isPlayLock && _this.content && _this.content.length > 0 || (_op.isPlayLock = !0,
+                        _this.next(),
+                        e.stopPropagation())
+                }
+            )
+    };
+
+    Switchable.prototype.next=function(){
+        var _this = this,_op = _this.options;
+        _this.current = _this.current + _op.step;
+        _this.current >= _this.len && (_this.current = 0);
+        _this.switchTo( _this.current);
+        _op.onNext.call(_this)
+    };
+    Switchable.prototype.prev=function(){
+        var _this = this,_op = _this.options;
+        _this.current -= _op.step;
+        _this.current < 0 && (_this.current =  _this.len - _op.step);
+        _this.switchTo( _this.current);
+        _op.onPrev.call(_this)
+    };
+    Switchable.prototype.autoPlay=function(){
+        var _this = this;
+        _this.options.isAutoPlay && _this.startPlay()
+    };
+    Switchable.prototype.startPlay=function(){
+        var _this = this,_op = _this.options;
+        _this.stopPlay();
+
+        _this.autoInterval = setInterval(function() {
+                _this.main.length <= _op.step ? _this.stopPlay() : "prev" == _op.playDirection ? _this.prev() : _this.next()
+            }
+            , _op.stayTime)
+    };
+    Switchable.prototype.stopPlay=function(){
+        var _this = this;
+        clearInterval(_this.autoInterval)
+    };
+
+
 
     // Switchable plugin definition
     // =====================

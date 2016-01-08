@@ -8,7 +8,7 @@ requirejs.config({
     "baseUrl": "/Jquery-Zepto-UI",
     "paths": {
         "jquery": "public/jquery",
-        "jquery.easing":"public/jquery.easing",
+        //"jquery.easing":"public/jquery.easing",
         "jquery.ui.switchable":"jquery.v.slider/1.0.1/jquery.ui.switchable"
 
         //"layer":"public/layer/layer"

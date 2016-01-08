@@ -67,8 +67,7 @@
                 b.nav.each(function(b) {
                         var d = a(this);
                         d.hasClass(c.navSelectedClass) && (-1 == e ? e = b : d.removeClass(c.navSelectedClass))
-                    }
-                ),
+                    }),
                 e > -1 && (c.defaultPanel = e)
             }
             if (c.width && (b.mainWidth = c.width),
@@ -127,22 +126,18 @@
                                 clearInterval(b.autoInterval)
                         }
                     )
-                }
-            ),
+                }),
             c.mouseenterStopPlay && b.el.each(function() {
                     a(this).bind("mouseenter", function() {
                             clearInterval(b.autoInterval)
-                        }
-                    ).bind("mouseleave", function() {
+                        }).bind("mouseleave", function() {
                             b.autoPlay()
-                        }
-                    )
+                        })
                 }
             ),
             !a.browser.isMobile() || "focus" != c.type && "slider" != c.type || (b.main.swipeLeft(function() {
                     b.next()
-                }
-            ),
+                }),
                 b.main.swipeRight(function() {
                         b.prev()
                     }

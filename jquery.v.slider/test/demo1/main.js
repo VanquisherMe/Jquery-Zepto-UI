@@ -6,6 +6,8 @@
 requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
 
     $(".focus-demo-01").switchable({
+        type:"focus",
+        isAutoPlay:true,
         contentClass:"focus-main",
         mainClass:"focus-panel",
         bodyExtra:"focus-extra",
@@ -13,7 +15,8 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         navItem:"focus-item",
         prevClass:"focus-prev",
         nextClass:"focus-next",
-        navSelectedClass:"focus-active"
+        navSelectedClass:"focus-active",
+        contentPage:"focus-page"
 
     })
 
