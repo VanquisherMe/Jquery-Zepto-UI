@@ -7,7 +7,7 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
 
     $(".focus-demo-01").switchable({
         type:"focus",
-        isAutoPlay:true,
+        isAutoPlay:!0,
         contentClass:"focus-main",
         mainClass:"focus-panel",
         bodyExtra:"focus-extra",
@@ -19,5 +19,22 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         contentPage:"focus-page"
 
     })
+
+    $(".slider-demo-02").switchable({
+        type:"slider",
+        isAutoPlay:!0,
+        counter:!1, // 索引 计数器 [ false]
+        contentClass:"slider-main",
+        mainClass:"slider-panel",
+        bodyExtra:"slider-extra",
+        navClass:"slider-nav",
+        navItem:"slider-item",
+        prevClass:"slider-prev",
+        nextClass:"slider-next",
+        navSelectedClass:"slider-active",
+        contentPage:"slider-page"
+
+    })
+
 
 });

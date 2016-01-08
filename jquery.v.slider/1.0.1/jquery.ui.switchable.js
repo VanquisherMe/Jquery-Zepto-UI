@@ -19,8 +19,8 @@
         _this.main = _this.el.find("." + _op.mainClass);
         _this.len =_this.main.size();
         _this.content = _this.el.find("." + _op.contentClass);
-
-
+        _this.mainWidth = _this.main.outerWidth(_op.includeMargin);
+        _this.mainHeight = _this.main.outerHeight(_op.includeMargin);
         //判断 是否 有  nav
 
         if(_op.navClass){
@@ -62,7 +62,7 @@
     Switchable.VERSION = '1.0.0';
     Switchable.DEFAULTS={
             type:"tab",//类型
-            direction: "left",// 布局方向
+            direction: "left",   //和slider 相关的属性 "left" ,"top"
 
             contentClass: "ui-switchable-panel-main", //面板包含元素
             mainClass: "ui-switchable-panel",//面板 元素
@@ -98,15 +98,16 @@
 
            width: 0,
            height: 0,
-           seamlessLoop: !1, //无缝循环
             step: 1,        //  每次走的 步数
-            //visible: 1,
+            seamlessLoop: !1, //无缝循环
+
+            visible: 1,     // 显示 的个数 { 针对 slider}
             easing: "swing",
             hasLoop: !1,
-            counter:1, // 索引 计数器
+            counter:1, // 索引 计数器 [ false]
              callback: null ,
             onNext: null ,
-            onPrev: null ,
+            onPrev: null
     };
     Switchable.prototype.eventBind=function(){
         var _this = this,_op = _this.options;
@@ -228,7 +229,42 @@
             _this.isInit = !1
 
     };
-    Switchable.prototype.slider=function(){};
+    Switchable.prototype.slider=function(i){
+        var _this = this,
+            _op = _this.options,
+            _mainWidth =_this.mainWidth,
+            _mainHeight =_this.mainHeight,
+            $content = _this.content,
+            _l=_mainWidth * i,
+            _t=_mainHeight * i;
+        _this.isInit ? ("left" == _op.direction ? (_this.main.css({
+            "float": "left"
+        }),
+            $content.css({
+                width: _mainWidth * _this.len
+            }),
+            $content.css({
+                left: -_l
+            })) : "top" == _op.direction && $content.css({
+            top: -_t
+        }),
+            $content.parent().css({
+                position: "relative"
+            }),
+            $content.css({
+                position: "absolute"
+            }),
+            _this.isInit = !1,
+            _op.isPlayLock = !1) :(setTimeout(function() {
+                _op.isPlayLock = !1
+            }
+            , _op.speed),
+            "left" == _op.direction ? $content.stop(!0).animate({
+                left: -_l
+            }, _op.speed, _op.easing) : "top" == _op.direction && $content.stop(!0).animate({
+                top: -f
+            }, _op.speed, _op.easing))
+    };
     Switchable.prototype.carousel=function(){};
     Switchable.prototype.imgscroll=function(){};
 
@@ -254,14 +290,15 @@
         _this.current = _this.current + _op.step;
         _this.current >= _this.len && (_this.current = 0);
         _this.switchTo( _this.current);
-        _op.onNext.call(_this)
+        $.isFunction(_op.onNext) && _op.onNext.call(_this)
     };
     Switchable.prototype.prev=function(){
         var _this = this,_op = _this.options;
         _this.current -= _op.step;
         _this.current < 0 && (_this.current =  _this.len - _op.step);
         _this.switchTo( _this.current);
-        _op.onPrev.call(_this)
+        $.isFunction(_op.onPrev) && _op.onPrev.call(_this);
+
     };
     Switchable.prototype.autoPlay=function(){
         var _this = this;
