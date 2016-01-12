@@ -23,22 +23,7 @@
         _this.mainHeight = _this.main.outerHeight(_op.includeMargin);
         //判断 是否 有  nav
 
-        if(_op.navClass){
 
-            for(var i=0; i<_this.len; i++){
-                $navItem += '<li class="'+ _op.navItem + ("0" == i ? " "+_op.navSelectedClass : "")+'">' + (_op.counter ?_op.counter++ : "")+'</li>';
-            }
-            $navClass='<ul class="'+ _op.navClass +'">'+ $navItem +'</ul>';
-
-            //_this.el.append($navClass);
-        }
-        //判断 是否 有  翻页
-        if(_op.contentPage){
-            $contentPage='<div class="'+_op.contentPage+'"><a href="javascript:void(0)" class="'+_op.prevClass+'">&lt;</a><a href="javascript:void(0)" class="'+_op.nextClass+'">&gt;</a></div>';
-        }
-        _op.bodyExtra ? ($bodyExtra = '<div class="'+_op.bodyExtra+'">'+$navClass + $contentPage +'</div>') : ($bodyExtra = $navClass + $contentPage );
-
-        _this.el.append($bodyExtra);
         //初始化 完成
         _this.nav = _this.el.find("." + _op.navItem);
         idefaultPanel=_op.defaultPanel;
