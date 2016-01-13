@@ -555,8 +555,7 @@
                         h = a;
                     f.defaultPanel = h,
                         e.init()
-                }
-                ;
+                };
             d.call(e.main.eq(h), e.content, h, o) ? e.el.find("." + f.mainClass).each(function(b) {
                     a(this).data("switchable-idx", b)
                 }

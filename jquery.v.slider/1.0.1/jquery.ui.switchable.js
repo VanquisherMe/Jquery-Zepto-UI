@@ -13,19 +13,18 @@
 }(function ($ ,easing,undefined) {
     var Switchable=function(element , options){
 
-        var _this=this,_op,计数器,$navItem="",$navClass,$contentPage="",$bodyExtra,idefaultPanel;
+        var _this=this,_op,$navItem="",$navClass,$contentPage="",$bodyExtra,idefaultPanel;
         _this.el = $(element);
         _op=_this.options=  $.extend({}, Switchable.DEFAULTS, options || {});
+        _this.nav = _this.el.find("." + _op.navItem);
         _this.main = _this.el.find("." + _op.mainClass);
         _this.len =_this.main.size();
         _this.content = _this.el.find("." + _op.contentClass);
         _this.mainWidth = _this.main.outerWidth(_op.includeMargin);
         _this.mainHeight = _this.main.outerHeight(_op.includeMargin);
-        //判断 是否 有  nav
-
 
         //初始化 完成
-        _this.nav = _this.el.find("." + _op.navItem);
+
         idefaultPanel=_op.defaultPanel;
 
         //记录 上次一次的 索引
