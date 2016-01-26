@@ -13,15 +13,31 @@
 }(function ($ ,easing,undefined) {
     var Switchable=function(element , options){
 
-        var _this=this,_op,$navItem="",$navClass,$contentPage="",$bodyExtra,idefaultPanel;
+        var _this=this,_op,
+            _initState=!0,
+            idefaultPanel;
         _this.el = $(element);
         _op=_this.options=  $.extend({}, Switchable.DEFAULTS, options || {});
-        _this.nav = _this.el.find("." + _op.navItem);
-        _this.main = _this.el.find("." + _op.mainClass);
-        _this.len =_this.main.size();
-        _this.content = _this.el.find("." + _op.contentClass);
-        _this.mainWidth = _this.main.outerWidth(_op.includeMargin);
-        _this.mainHeight = _this.main.outerHeight(_op.includeMargin);
+
+        if(_this.addClassfnc(),
+                //如果显示的数量 小于了 步数成立，就让 显示数 == 步数
+        _op.visible < _op.step &&(_op.visible = _op.step ),
+                _this.nav = _this.el.find("." + _op.navItem),
+                _this.main = _this.el.find("." + _op.mainClass),
+                _op.step = Math.max(_op.step || 1, 1),
+                _this.len =_this.main.size(),
+                _this.content = _this.el.find("." + _op.contentClass),
+                _this.mainWidth = _this.main.outerWidth(_op.includeMargin),
+                _this.mainHeight = _this.main.outerHeight(_op.includeMargin),
+                _initState=_op.step < _this.len,
+                "tab" == c.type && c.navSelectedClass && b.nav.length > 0){
+
+
+        }
+
+
+
+
 
         //初始化 完成
 
@@ -92,6 +108,9 @@
              callback: null ,
             onNext: null ,
             onPrev: null
+    };
+    Switchable.prototype.addClassfnc=function(){
+
     };
     Switchable.prototype.eventBind=function(){
         var _this = this,_op = _this.options;
