@@ -30,11 +30,34 @@
                 _this.mainWidth = _this.main.outerWidth(_op.includeMargin),
                 _this.mainHeight = _this.main.outerHeight(_op.includeMargin),
                 _initState=_op.step < _this.len,
-                "tab" == c.type && c.navSelectedClass && b.nav.length > 0){
+                "tab" == _op.type && _op.navSelectedClass && _this.nav.length > 0){
+                var e=-1;
+                _this.nav.each(function(i){
+                    var $this = a(this);
+                    $this.hasClass(_op.navSelectedClass) && (-1 == e ? e = i : $this.removeClass(_op.navSelectedClass))
+                }),
+                e > -1 && (_op.defaultPanel = e)
+        }
+        if(_op.width && (_this.mainWidth = _op.width),
+                _this.mainHeight = _this.main.outerHeight(_op.includeMargin),
+            _op.height && (_this.mainHeight = _op.height),
+                _this.cloneCount = Math.max(_op.step, _op.visible),
+            _op.seamlessLoop && _initState){
+                var front = [],
+                    behind = [],
+                    _cloneCount = _this.cloneCount;
+
+                for (var i = 0; _cloneCount > i; i++){
+                    front.push(_this.main.eq(i).clone().attr("data-switchable-clone", 1).data("switchable-clone-from", _cloneCount + i)),
+                        behind.push(_this.main.eq(_this.len - (i + 1)).clone().attr("data-switchable-clone", 1).data("switchable-clone-from",  _this.len + i));
+                }
+                for (var j = 0; h > j; j++){
+                    _this.content.prepend(behind[j]).append(front[j]);
+                }
+
 
 
         }
-
 
 
 
@@ -96,8 +119,8 @@
 
             includeMargin:!1, //计算 元素 单位的时候 是否计算 margin 值
 
-           width: 0,
-           height: 0,
+            width: 0,
+            height: 0,
             step: 1,        //  每次走的 步数
             seamlessLoop: !1, //无缝循环
 
