@@ -14,8 +14,7 @@
     var Switchable=function(element , options){
 
         var _this=this,_op,
-            _initState=!0,
-            idefaultPanel;
+            _initState=!0;
         _this.el = $(element);
         _op=_this.options=  $.extend({}, Switchable.DEFAULTS, options || {});
 
@@ -51,36 +50,31 @@
                     front.push(_this.main.eq(i).clone().attr("data-switchable-clone", 1).data("switchable-clone-from", _cloneCount + i)),
                         behind.push(_this.main.eq(_this.len - (i + 1)).clone().attr("data-switchable-clone", 1).data("switchable-clone-from",  _this.len + i));
                 }
-                for (var j = 0; h > j; j++){
+                for (var j = 0; _cloneCount > j; j++){
                     _this.content.prepend(behind[j]).append(front[j]);
                 }
+            }
 
-
-
-        }
-
-
+            _this.main.each(function(b) {
+                    $(this).data("switchable-idx", b)
+                }
+            );
 
 
         //初始化 完成
 
-        idefaultPanel=_op.defaultPanel;
+        var  idefaultPanel=_op.defaultPanel;
 
-        //记录 上次一次的 索引
-        _this.last = idefaultPanel;
-        //初始当前值
-        _this.current = idefaultPanel;
-        //将面板 初始化到 正确的面板上
-        _this.isInit = !0;
-        _this.switchTo(idefaultPanel);
 
-        //自动播放定时器
-        _this.autoInterval = null;
-        //延时触发
-        _this.eventTimer = null;
-
-        _this.eventBind();
-        _this.autoPlay();
+        _this.last = idefaultPanel,  //记录 上次一次的 索引
+        _this.current = idefaultPanel, //初始当前值
+        _this.isInit = !0, //初始当前值
+            _op.seamlessLoop && _initState ? _this.switchTo(idefaultPanel, idefaultPanel + _this.cloneCount) : _this.switchTo(idefaultPanel, idefaultPanel),
+        //_this.switchTo(idefaultPanel),
+        _this.autoInterval = null, //自动播放定时器
+        _this.eventTimer = null;  //延时触发
+        _initState && ( _this.autoPlay(),
+            _this.eventBind());
     };
     Switchable.VERSION = '1.0.0';
     Switchable.DEFAULTS={
@@ -168,14 +162,15 @@
 
     };
     //切换入口
-    Switchable.prototype.switchTo=function(i){
+    Switchable.prototype.switchTo=function(_iNav,iMain){
+        console.log(_iNav , iMain)
         var _this = this,_op = _this.options;
         if ("undefined" == typeof i){
             console.log("\u7d22\u5f15\u4e0d\u662f\u4e00\u4e2a\u6570\u5b57")
 
         }else{
-            _this.switchNavTo(i);
-                 _this.switchMainTo(i)
+            _this.switchNavTo(_iNav);
+                 _this.switchMainTo(iMain)
         }
 
     };
