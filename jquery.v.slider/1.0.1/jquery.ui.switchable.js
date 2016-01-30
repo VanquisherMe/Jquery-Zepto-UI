@@ -65,7 +65,6 @@
 
         var  idefaultPanel=_op.defaultPanel;
 
-
         _this.last = idefaultPanel,  //记录 上次一次的 索引
         _this.current = idefaultPanel, //初始当前值
         _this.isInit = !0, //初始当前值
@@ -131,17 +130,16 @@
     };
     Switchable.prototype.eventBind=function(){
         var _this = this,_op = _this.options;
-
         //鼠标 移入 nav 的 时候
         (_op.navClass && _this.nav) && ( _this.nav.on(_op.event,function(){
             var $current= $(this);
             clearInterval( _this.autoInterval );
             //当前移入的 元素 记录在 current
             0 === _op.delay ? (_this.current = $current.index(),
-                _this.switchTo(_this.current)):(clearTimeout(_this.eventTimer),
+                _this.switchTo(_this.current , _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)):(clearTimeout(_this.eventTimer),
                 _this.eventTimer = setTimeout(function() {
                     _this.current =  $current.index();
-                            _this.switchTo(_this.current)
+                            _this.switchTo(_this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)
                     }, _op.delay));
 
         }).on("mouseleave",function(){
@@ -163,9 +161,9 @@
     };
     //切换入口
     Switchable.prototype.switchTo=function(_iNav,iMain){
-        console.log(_iNav , iMain)
+
         var _this = this,_op = _this.options;
-        if ("undefined" == typeof i){
+        if ("undefined" == typeof _iNav || "undefined" == typeof iMain ){
             console.log("\u7d22\u5f15\u4e0d\u662f\u4e00\u4e2a\u6570\u5b57")
 
         }else{
@@ -310,14 +308,14 @@
         var _this = this,_op = _this.options;
         _this.current = _this.current + _op.step;
         _this.current >= _this.len && (_this.current = 0);
-        _this.switchTo( _this.current);
+        _this.switchTo( _this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current);
         $.isFunction(_op.onNext) && _op.onNext.call(_this)
     };
     Switchable.prototype.prev=function(){
         var _this = this,_op = _this.options;
         _this.current -= _op.step;
         _this.current < 0 && (_this.current =  _this.len - _op.step);
-        _this.switchTo( _this.current);
+        _this.switchTo( _this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current);
         $.isFunction(_op.onPrev) && _op.onPrev.call(_this);
 
     };
