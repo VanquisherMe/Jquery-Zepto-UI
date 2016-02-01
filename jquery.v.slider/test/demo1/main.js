@@ -23,7 +23,6 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
     $(".slider-demo-02").switchable({
         type:"slider",
         seamlessLoop:!0,
-        isAutoPlay:!0,
         counter:!1, // 索引 计数器 [ false]
         contentClass:"slider-main",
         mainClass:"slider-panel",

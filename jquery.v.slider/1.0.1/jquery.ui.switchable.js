@@ -53,6 +53,7 @@
                 for (var j = 0; _cloneCount > j; j++){
                     _this.content.prepend(behind[j]).append(front[j]);
                 }
+                _this.main = _this.el.find("." + _op.mainClass)
             }
 
             _this.main.each(function(b) {
@@ -121,7 +122,7 @@
             easing: "swing",
             hasLoop: !1,
             counter:1, // 索引 计数器 [ false]
-             callback: null ,
+            callback: null ,
             onNext: null ,
             onPrev: null
     };
@@ -259,7 +260,12 @@
         _this.isInit ? ("left" == _op.direction ? (_this.main.css({
             "float": "left"
         }),
-            $content.css({
+           /* $content.css({
+                width: _mainWidth * _this.len
+            }),*/
+            $content.css(_op.seamlessLoop ? {
+                width: _mainWidth * (_this.len + 2 * _this.cloneCount)
+            } : {
                 width: _mainWidth * _this.len
             }),
             $content.css({
@@ -281,7 +287,7 @@
             "left" == _op.direction ? $content.stop(!0).animate({
                 left: -_l
             }, _op.speed, _op.easing) : "top" == _op.direction && $content.stop(!0).animate({
-                top: -f
+                top: -_t
             }, _op.speed, _op.easing))
     };
     Switchable.prototype.carousel=function(){};
@@ -306,6 +312,9 @@
 
     Switchable.prototype.next=function(){
         var _this = this,_op = _this.options;
+        var difference = 0;
+
+
         _this.current = _this.current + _op.step;
         _this.current >= _this.len && (_this.current = 0);
         _this.switchTo( _this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current);
