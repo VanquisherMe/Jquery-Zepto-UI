@@ -250,6 +250,7 @@
 
     };
     Switchable.prototype.slider=function(i){
+        console.log(i)
         var _this = this,
             _op = _this.options,
             _mainWidth =_this.mainWidth,
@@ -316,7 +317,10 @@
 
 
         _this.current = _this.current + _op.step;
+        _this.offsetIndex()
         _this.current >= _this.len && (_this.current = 0);
+        console.log( _this.cloneCount)
+        console.log( _this.current)
         _this.switchTo( _this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current);
         $.isFunction(_op.onNext) && _op.onNext.call(_this)
     };
@@ -326,6 +330,23 @@
         _this.current < 0 && (_this.current =  _this.len - _op.step);
         _this.switchTo( _this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current);
         $.isFunction(_op.onPrev) && _op.onPrev.call(_this);
+
+    };
+    Switchable.prototype.offsetIndex=function(a){
+        var _this = this;
+        var $content = _this.content;
+        var _op = _this.options;
+        var _mainWidth = _this.mainWidth;
+        var _mainHeight = _this.mainHeight;
+        var w = null ;
+        var h = null ;
+        var i = null ;
+
+            console.log( _this.current)
+            console.log( _this.len)
+        _this.current >= _this.len && $content.css({ left : 0})
+
+      /*  a && _op.seamlessLoop ? ( ) :*/
 
     };
     Switchable.prototype.autoPlay=function(){

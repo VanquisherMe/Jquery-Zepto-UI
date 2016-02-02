@@ -7,7 +7,7 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
 
     $(".focus-demo-01").switchable({
         type:"focus",
-        isAutoPlay:!0,
+/*        isAutoPlay:!0,*/
         contentClass:"focus-main",
         mainClass:"focus-panel",
         bodyExtra:"focus-extra",
