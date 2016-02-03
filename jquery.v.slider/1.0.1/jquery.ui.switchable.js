@@ -140,7 +140,9 @@
                 _this.switchTo(_this.current , _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)):(clearTimeout(_this.eventTimer),
                 _this.eventTimer = setTimeout(function() {
                     _this.current =  $current.index();
-                            _this.switchTo(_this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)
+                                    console.log(_this.current)
+                                    console.log(_op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)
+                            _this.switchTo(_this.current, _op.seamlessLoop ? _this.current+ _this.cloneCount : _this.current)
                     }, _op.delay));
 
         }).on("mouseleave",function(){
@@ -162,7 +164,7 @@
     };
     //切换入口
     Switchable.prototype.switchTo=function(_iNav,iMain){
-
+        console.log(_iNav+","+iMain)
         var _this = this,_op = _this.options;
         if ("undefined" == typeof _iNav || "undefined" == typeof iMain ){
             console.log("\u7d22\u5f15\u4e0d\u662f\u4e00\u4e2a\u6570\u5b57")
@@ -250,7 +252,6 @@
 
     };
     Switchable.prototype.slider=function(i){
-        console.log(i)
         var _this = this,
             _op = _this.options,
             _mainWidth =_this.mainWidth,
@@ -312,23 +313,33 @@
     };
 
     Switchable.prototype.next=function(){
-        var _this = this,_op = _this.options;
+        var _this = this,
+            _op = _this.options;
+        _this.current = _this.current + _op.step,
+        _this.offsetIndex();
         var difference = 0;
 
+        !_op.seamlessLoop && (difference = -_op.visible + _op.step),
+        _this.current >= _this.len + difference && (_this.current = 0);
+        //取值
+        var e = _op.visible/* > _op.step ? _op.visible : _op.step;*/
+        console.log(_this.current + e)
+        console.log( _this.len)
+        //这里是判断 _op.visible 和 _op.step 不等于 1 1 的时候
+        !_op.seamlessLoop && _this.current + e > _this.len && (_this.current = _this.len > e ? _this.len - e : 0);
 
-        _this.current = _this.current + _op.step;
-        _this.offsetIndex()
-        _this.current >= _this.len && (_this.current = 0);
-        console.log( _this.cloneCount)
-        console.log( _this.current)
-        _this.switchTo( _this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current);
+        var f = _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current;
+
+        _this.switchTo( _this.current, f),
         $.isFunction(_op.onNext) && _op.onNext.call(_this)
     };
     Switchable.prototype.prev=function(){
-        var _this = this,_op = _this.options;
-        _this.current -= _op.step;
-        _this.current < 0 && (_this.current =  _this.len - _op.step);
-        _this.switchTo( _this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current);
+        var _this = this,
+            _op = _this.options;
+        _op.seamlessLoop  ? _this.offsetIndex(!0) : ( _this.current -= _op.step,
+        _this.current < 0 && (_this.current =  _this.current > - _op.step ? 0 :_this.len - _op.step));
+        var d = _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current;
+        _this.switchTo( _this.current,d);
         $.isFunction(_op.onPrev) && _op.onPrev.call(_this);
 
     };
@@ -342,11 +353,21 @@
         var h = null ;
         var i = null ;
 
-            console.log( _this.current)
-            console.log( _this.len)
-        _this.current >= _this.len && $content.css({ left : 0})
-
-      /*  a && _op.seamlessLoop ? ( ) :*/
+          /*  console.log( _this.current)
+            console.log( _this.len)*/
+        a && _op.seamlessLoop ? (i = _this.current,
+            _this.current <= 0 ? (i = _this.len - _op.step + _this.current,
+                w = -((_this.len + (_this.cloneCount + _this.current)) * _mainWidth),
+                h = -((_this.len + (_this.cloneCount + _this.current)) * _mainHeight)) : i -= _op.step,
+            _this.current = i) : _this.current >= _this.len && _op.seamlessLoop && (i = _this.current - _this.len,
+            w = -((i + _this.cloneCount - _op.step) * _mainWidth),
+            h = -((i + _this.cloneCount - _op.step) * _mainHeight),
+            _this.current = i),
+            null  != w && "left" == _op.direction ? $content.css({
+                left: w
+            }) : null  != h && "top" == _op.direction && $content.css({
+                top: h
+            })
 
     };
     Switchable.prototype.autoPlay=function(){

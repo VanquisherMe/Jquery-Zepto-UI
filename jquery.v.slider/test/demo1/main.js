@@ -22,6 +22,7 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
 
     $(".slider-demo-02").switchable({
         type:"slider",
+        //direction:"top",
         seamlessLoop:!0,
         counter:!1, // 索引 计数器 [ false]
         contentClass:"slider-main",
@@ -35,6 +36,18 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         contentPage:"slider-page"
 
     })
-
+    $(".slider-demo-03").switchable({
+        type:"slider",
+        counter:!1, // 索引 计数器 [ false]
+        contentClass:"slider-main",
+        mainClass:"slider-panel",
+        bodyExtra:"slider-extra",
+        navClass:"slider-nav",
+        navItem:"slider-item",
+        prevClass:"slider-prev",
+        nextClass:"slider-next",
+        navSelectedClass:"slider-active",
+        contentPage:"slider-page"
+    })
 
 });
