@@ -2,7 +2,7 @@
 
 .focus-demo-01{
 
-    height: 350px;
+    height: 150px;
 }
 
 .focus-demo-01 .focus-main{
@@ -14,10 +14,10 @@
     position: absolute;
     z-index: 0;
     width: 100%;
-    height: 350px;
+    height: 150px;
     color:#fff;
     text-align: center;
-    line-height: 350px;
+    line-height: 150px;
     font-size: 60px;
 
 }
@@ -25,11 +25,11 @@
 .focus-demo-01 .focus-extra{
     position: relative;
     width: 970px;
-    height: 350px;
+    height: 150px;
     margin: 0 auto;
 }
 .focus-demo-01 .focus-nav{
-    top:320px;
+    top:120px;
     width: 530px;
     height: 0;
     line-height: 0;
@@ -86,10 +86,10 @@
     right: 0;
     z-index: 4;
 }
-/*----------------demo2---------------------*/
+/*----------------demo02---------------------*/
 .slider-demo-02{
-    width: 370px;
-    height: 350px;
+    width: 170px;
+    height: 150px;
     margin: 0 auto;
     overflow: hidden;
 
@@ -100,27 +100,27 @@
 }
 
 .slider-demo-02 .slider-main li.slider-panel{
-    width: 370px;
+    width: 170px;
     z-index: 0;
-    height: 350px;
+    height: 150px;
     color:#fff;
     text-align: center;
-    line-height: 350px;
+    line-height:150px;
     font-size: 60px;
 }
 
 .slider-demo-02 .slider-extra{
     position: relative;
-    width: 370px;
-    height: 350px;
+    width: 170px;
+    height: 150px;
     margin: 0 auto;
 }
 .slider-demo-02 .slider-nav{
-    top:320px;
-    width: 230px;
+    top:120px;
+    width: 130px;
     height: 0;
     line-height: 0;
-    left:77px;
+    left:22px;
     text-align: center;
     position: absolute;
     z-index: 4;
@@ -174,13 +174,369 @@
     right: 0;
     z-index: 4;
 }
-/*----------------demo3---------------------*/
-.slider-demo-03{
-    width: 370px;
-    height: 350px;
+/*----------------demo02_1---------------------*/
+.slider-demo-02_1{
+    width: 170px;
+    height: 150px;
     margin: 0 auto;
     overflow: hidden;
 
+}
+
+.slider-demo-02_1 .slider-main{
+    position: relative;
+}
+
+.slider-demo-02_1 .slider-main li.slider-panel{
+    width: 170px;
+    z-index: 0;
+    height: 150px;
+    color:#fff;
+    text-align: center;
+    line-height: 150px;
+    font-size: 60px;
+}
+
+.slider-demo-02_1 .slider-extra{
+    position: relative;
+    width: 170px;
+    height: 150px;
+    margin: 0 auto;
+}
+.slider-demo-02_1 .slider-nav{
+    top:120px;
+    width: 130px;
+    height: 0;
+    line-height: 0;
+    left:22px;
+    text-align: center;
+    position: absolute;
+    z-index: 4;
+}
+.slider-demo-02_1 .slider-nav li {
+
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin: 0 2px;
+    background: #3e3e3e;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
+
+
+}
+
+.slider-demo-02_1 .slider-nav li.slider-active{
+    background: #b61b1f;
+    color: #fff;
+}
+
+
+.slider-page a {
+    position: absolute;
+    top: 50%;
+    margin-top: -31px;
+    z-index: 1;
+    display: block;
+    width: 28px;
+    height: 62px;
+    line-height: 62px;
+    background: gray;
+    background: rgba(0,0,0,.2);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#32000000, endColorstr=#32000000);
+    color: #fff;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    font-family: simsun;
+}
+
+.slider-page a.slider-prev {
+    left: 0;
+    z-index: 4;
+}
+.slider-page a.slider-next {
+    right: 0;
+    z-index: 4;
+}
+
+/*----------------demo02_2---------------------*/
+.slider-demo-02_2{
+     width: 680px;
+     height: 150px;
+     margin: 0 auto;
+     overflow: hidden;
+
+ }
+
+.slider-demo-02_2 .slider-main{
+    position: relative;
+}
+
+.slider-demo-02_2 .slider-main li.slider-panel{
+    width: 170px;
+    z-index: 0;
+    height: 150px;
+    color:#fff;
+    text-align: center;
+    line-height: 150px;
+    font-size: 60px;
+
+}
+
+.slider-demo-02_2 .slider-extra{
+    position: relative;
+    width: 680px;
+    height: 150px;
+    margin: 0 auto;
+}
+.slider-demo-02_2 .slider-nav{
+    top:120px;
+    width: 150px;
+    height: 0;
+    line-height: 0;
+    left:275px;
+    text-align: center;
+    position: absolute;
+    z-index: 4;
+}
+.slider-demo-02_2 .slider-nav li {
+
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin: 0 2px;
+    background: #3e3e3e;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
+
+
+}
+
+.slider-demo-02_2 .slider-nav li.slider-active{
+    background: #b61b1f;
+    color: #fff;
+}
+
+
+.slider-page a {
+    position: absolute;
+    top: 50%;
+    margin-top: -31px;
+    z-index: 1;
+    display: block;
+    width: 28px;
+    height: 62px;
+    line-height: 62px;
+    background: gray;
+    background: rgba(0,0,0,.2);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#32000000, endColorstr=#32000000);
+    color: #fff;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    font-family: simsun;
+}
+
+.slider-page a.slider-prev {
+    left: 0;
+    z-index: 4;
+}
+.slider-page a.slider-next {
+    right: 0;
+    z-index: 4;
+}
+
+/*----------------demo02_3---------------------*/
+.slider-demo-02_3{
+    width: 680px;
+    height: 150px;
+    margin: 0 auto;
+    overflow: hidden;
+
+}
+
+.slider-demo-02_3 .slider-main{
+    position: relative;
+}
+
+.slider-demo-02_3 .slider-main li.slider-panel{
+    width: 170px;
+    z-index: 0;
+    height: 150px;
+    color:#fff;
+    text-align: center;
+    line-height: 150px;
+    font-size: 60px;
+
+}
+
+.slider-demo-02_3 .slider-extra{
+    position: relative;
+    width: 680px;
+    height: 150px;
+    margin: 0 auto;
+}
+.slider-demo-02_3 .slider-nav{
+    top:120px;
+    width: 150px;
+    height: 0;
+    line-height: 0;
+    left:275px;
+    text-align: center;
+    position: absolute;
+    z-index: 4;
+}
+.slider-demo-02_3 .slider-nav li {
+
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin: 0 2px;
+    background: #3e3e3e;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
+
+
+}
+
+.slider-demo-02_3 .slider-nav li.slider-active{
+    background: #b61b1f;
+    color: #fff;
+}
+
+
+.slider-page a {
+    position: absolute;
+    top: 50%;
+    margin-top: -31px;
+    z-index: 1;
+    display: block;
+    width: 28px;
+    height: 62px;
+    line-height: 62px;
+    background: gray;
+    background: rgba(0,0,0,.2);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#32000000, endColorstr=#32000000);
+    color: #fff;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    font-family: simsun;
+}
+
+.slider-page a.slider-prev {
+    left: 0;
+    z-index: 4;
+}
+.slider-page a.slider-next {
+    right: 0;
+    z-index: 4;
+}
+/*----------------demo02_4---------------------*/
+.slider-demo-02_4{
+    width: 1020px;
+    height: 150px;
+    margin: 0 auto;
+    overflow: hidden;
+
+}
+
+.slider-demo-02_4 .slider-main{
+    position: relative;
+}
+
+.slider-demo-02_4 .slider-main li.slider-panel{
+    width: 170px;
+    z-index: 0;
+    height: 150px;
+    color:#fff;
+    text-align: center;
+    line-height: 150px;
+    font-size: 60px;
+
+}
+
+.slider-demo-02_4 .slider-extra{
+    position: relative;
+    width: 1020px;
+    height: 150px;
+    margin: 0 auto;
+}
+.slider-demo-02_4 .slider-nav{
+    top:120px;
+    width: 150px;
+    height: 0;
+    line-height: 0;
+    left:275px;
+    text-align: center;
+    position: absolute;
+    z-index: 4;
+}
+.slider-demo-02_4 .slider-nav li {
+
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin: 0 2px;
+    background: #3e3e3e;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
+
+
+}
+
+.slider-demo-02_4 .slider-nav li.slider-active{
+    background: #b61b1f;
+    color: #fff;
+}
+
+
+.slider-page a {
+    position: absolute;
+    top: 50%;
+    margin-top: -31px;
+    z-index: 1;
+    display: block;
+    width: 28px;
+    height: 62px;
+    line-height: 62px;
+    background: gray;
+    background: rgba(0,0,0,.2);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#32000000, endColorstr=#32000000);
+    color: #fff;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    font-family: simsun;
+}
+
+.slider-page a.slider-prev {
+    left: 0;
+    z-index: 4;
+}
+.slider-page a.slider-next {
+    right: 0;
+    z-index: 4;
+}
+/*----------------demo03---------------------*/
+.slider-demo-03{
+    width: 170px;
+    height: 150px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .slider-demo-03 .slider-main{
@@ -188,27 +544,27 @@
 }
 
 .slider-demo-03 .slider-main li.slider-panel{
-    width: 370px;
+    width: 170px;
     z-index: 0;
-    height: 350px;
+    height: 150px;
     color:#fff;
     text-align: center;
-    line-height: 350px;
+    line-height: 150px;
     font-size: 60px;
 }
 
 .slider-demo-03 .slider-extra{
     position: relative;
-    width: 370px;
-    height: 350px;
+    width: 170px;
+    height: 150px;
     margin: 0 auto;
 }
 .slider-demo-03 .slider-nav{
-    top:320px;
-    width: 230px;
+    top:120px;
+    width: 130px;
     height: 0;
     line-height: 0;
-    left:77px;
+    left:22px;
     text-align: center;
     position: absolute;
     z-index: 4;
@@ -225,8 +581,6 @@
     color: #fff;
     overflow: hidden;
     cursor: pointer;
-
-
 }
 
 .slider-demo-03 .slider-nav li.slider-active{
@@ -262,28 +616,90 @@
     right: 0;
     z-index: 4;
 }
-/*=====================================================================*/
+/*----------------demo03_1---------------------*/
+.slider-demo-03_1{
+    width: 170px;
+    height: 150px;
+    margin: 0 auto;
+    overflow: hidden;
+}
 
-.mag{ margin: 30px auto}
-.bnr{
-    display: block;
-    width: 970px;
+.slider-demo-03_1 .slider-main{
+    position: relative;
+}
+
+.slider-demo-03_1 .slider-main li.slider-panel{
+    width: 170px;
+    z-index: 0;
+    height: 150px;
+    color:#fff;
+    text-align: center;
+    line-height: 150px;
+    font-size: 60px;
+}
+
+.slider-demo-03_1 .slider-extra{
+    position: relative;
+    width: 170px;
+    height: 150px;
     margin: 0 auto;
 }
-.red{
+.slider-demo-03_1 .slider-nav{
+    top:120px;
+    width: 130px;
+    height: 0;
+    line-height: 0;
+    left:22px;
+    text-align: center;
+    position: absolute;
+    z-index: 4;
+}
+.slider-demo-03_1 .slider-nav li {
 
-    background-color: red;
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin: 0 2px;
+    background: #3e3e3e;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
 }
-.blue{
-    background-color: #4898d5;
-}
-.orange{
-    background-color: orange;
-}
-.green{
-    background-color: green;
+
+.slider-demo-03_1 .slider-nav li.slider-active{
+    background: #b61b1f;
+    color: #fff;
 }
 
 
+.slider-page a {
+    position: absolute;
+    top: 50%;
+    margin-top: -31px;
+    z-index: 1;
+    display: block;
+    width: 28px;
+    height: 62px;
+    line-height: 62px;
+    background: gray;
+    background: rgba(0,0,0,.2);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#32000000, endColorstr=#32000000);
+    color: #fff;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    font-family: simsun;
+}
+
+.slider-page a.slider-prev {
+    left: 0;
+    z-index: 4;
+}
+.slider-page a.slider-next {
+    right: 0;
+    z-index: 4;
+}
 
 

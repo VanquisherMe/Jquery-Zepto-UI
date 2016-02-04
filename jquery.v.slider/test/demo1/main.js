@@ -36,9 +36,88 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         contentPage:"slider-page"
 
     })
+    $(".slider-demo-02_1").switchable({
+        type:"slider",
+        counter:!1, // 索引 计数器 [ false]
+        contentClass:"slider-main",
+        mainClass:"slider-panel",
+        bodyExtra:"slider-extra",
+        navClass:"slider-nav",
+        navItem:"slider-item",
+        prevClass:"slider-prev",
+        nextClass:"slider-next",
+        navSelectedClass:"slider-active",
+        contentPage:"slider-page"
+    })
+    $(".slider-demo-02_2").switchable({
+        type:"slider",
+        counter:!1, // 索引 计数器 [ false]
+        seamlessLoop:!0,
+        contentClass:"slider-main",
+        mainClass:"slider-panel",
+        bodyExtra:"slider-extra",
+        navClass:"slider-nav",
+        navItem:"slider-item",
+        prevClass:"slider-prev",
+        nextClass:"slider-next",
+        navSelectedClass:"slider-active",
+        contentPage:"slider-page",
+        step: 2,
+        visible: 4,
+    })
+    $(".slider-demo-02_3").switchable({
+        type:"slider",
+        counter:!1, // 索引 计数器 [ false]
+        //seamlessLoop:!0,
+        contentClass:"slider-main",
+        mainClass:"slider-panel",
+        bodyExtra:"slider-extra",
+        navClass:"slider-nav",
+        navItem:"slider-item",
+        prevClass:"slider-prev",
+        nextClass:"slider-next",
+        navSelectedClass:"slider-active",
+        contentPage:"slider-page",
+        step: 2,
+        visible: 4,
+    })
+    $(".slider-demo-02_4").switchable({
+        type:"slider",
+        counter:!1, // 索引 计数器 [ false]
+        //seamlessLoop:!0,
+        contentClass:"slider-main",
+        mainClass:"slider-panel",
+        bodyExtra:"slider-extra",
+        navClass:"slider-nav",
+        navItem:"slider-item",
+        prevClass:"slider-prev",
+        nextClass:"slider-next",
+        navSelectedClass:"slider-active",
+        contentPage:"slider-page",
+        step: 2,
+        visible: 6,
+    })
     $(".slider-demo-03").switchable({
         type:"slider",
         counter:!1, // 索引 计数器 [ false]
+        direction:"top",
+        seamlessLoop:!0,
+        contentClass:"slider-main",
+        mainClass:"slider-panel",
+        bodyExtra:"slider-extra",
+        navClass:"slider-nav",
+        navItem:"slider-item",
+        prevClass:"slider-prev",
+        nextClass:"slider-next",
+        navSelectedClass:"slider-active",
+        contentPage:"slider-page"
+    })
+
+    $(".slider-demo-03_1").switchable({
+        type:"slider",
+        counter:!1, // 索引 计数器 [ false]
+        direction:"top",
+
         contentClass:"slider-main",
         mainClass:"slider-panel",
         bodyExtra:"slider-extra",
