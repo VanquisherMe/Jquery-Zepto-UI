@@ -68,7 +68,7 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
     $(".slider-demo-02_3").switchable({
         type:"slider",
         counter:!1, // 索引 计数器 [ false]
-        //seamlessLoop:!0,
+        seamlessLoop:!0,
         contentClass:"slider-main",
         mainClass:"slider-panel",
         bodyExtra:"slider-extra",
@@ -78,7 +78,7 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         nextClass:"slider-next",
         navSelectedClass:"slider-active",
         contentPage:"slider-page",
-        step: 2,
+        step: 3,
         visible: 4,
     })
     $(".slider-demo-02_4").switchable({

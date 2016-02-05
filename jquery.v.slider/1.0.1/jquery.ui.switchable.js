@@ -140,8 +140,7 @@
                 _this.switchTo(_this.current , _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)):(clearTimeout(_this.eventTimer),
                 _this.eventTimer = setTimeout(function() {
                     _this.current =  $current.index();
-                                    console.log(_this.current)
-                                    console.log(_op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)
+
                             _this.switchTo(_this.current, _op.seamlessLoop ? _this.current+ _this.cloneCount : _this.current)
                     }, _op.delay));
 
@@ -252,7 +251,7 @@
 
     };
     Switchable.prototype.slider=function(i){
-        console.log(i)
+        //console.log(i)
         var _this = this,
             _op = _this.options,
             _mainWidth =_this.mainWidth,
@@ -322,18 +321,21 @@
         //这里是判断 不是 无缝循环的情况
         //
         !_op.seamlessLoop && (difference = -_op.visible + _op.step),
+           /* console.log(_this.current),
+            console.log(_this.len  +"----"+difference+"="+(_this.len + difference)),*/
         _this.current >= _this.len + difference && (_this.current = 0);
         //取值
         var e = _op.visible/* > _op.step ? _op.visible : _op.step;*/
-        console.log(e)
-        console.log(_this.current + e +","+  _this.len)
-        console.log( "--------------"+(_this.current+"/"+_op.step+"="+_this.current/_op.step))
+        /*console.log(e)
+        console.log(_this.current + e +","+  _this.len)*/
+
         //这里是判断 不是 无缝循环的情况
         //如果 当前的[_this.current]的索引 大于了 面板的 length :只有当 设置的 visible > step 的时候才会走下面这句
         // _this.len - e[ = visible]可以正好让 最后一屏显示
         !_op.seamlessLoop && _this.current + e > _this.len && (alert(_this.len > e),_this.current = _this.len > e ? _this.len - e : 0);
 
         var f = _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current;
+
         _this.switchTo( _this.current/*/_op.step*/, f),
         $.isFunction(_op.onNext) && _op.onNext.call(_this)
     };
@@ -341,7 +343,7 @@
         var _this = this,
             _op = _this.options;
         _op.seamlessLoop  ? _this.offsetIndex(!0) : ( _this.current -= _op.step,
-        _this.current < 0 && (_this.current =  _this.current > - _op.step ? 0 :_this.len - _op.step));
+        _this.current < 0 && (_this.current =  _this.current > - _op.step ? 0 :_this.len - _op.visible));
         var d = _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current;
         _this.switchTo( _this.current,d);
         $.isFunction(_op.onPrev) && _op.onPrev.call(_this);
@@ -364,9 +366,7 @@
             _this.current <= 0 ? (i = _this.len - _op.step + _this.current,
                 w = -((_this.len + (_this.cloneCount + _this.current)) * _mainWidth),
                 h = -((_this.len + (_this.cloneCount + _this.current)) * _mainHeight)) : i -= _op.step,
-            _this.current = i) : _this.current >= _this.len && _op.seamlessLoop && (i = _this.current - _this.len,
-            alert(i),
-            alert(i + _this.cloneCount - _op.step),
+            _this.current = i) : _this.current >= _this.len && _op.seamlessLoop && (alert(_this.current+","+_this.len),i = _this.current - _this.len,
             w = -((i + _this.cloneCount - _op.step) * _mainWidth),
             h = -((i + _this.cloneCount - _op.step) * _mainHeight),
             _this.current = i),
@@ -375,7 +375,7 @@
             }) : null  != h && "top" == _op.direction && $content.css({
                 top: h
             })
-
+            //alert(w)
     };
     Switchable.prototype.autoPlay=function(){
         var _this = this;
