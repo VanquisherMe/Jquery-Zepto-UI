@@ -350,6 +350,9 @@
 
     };
     //处理复位 无缝循环时候的 复位
+    //只有 seamlessLoop 为true 时 才有效
+    // @ a :false [next]
+    //     :true  [prev]
     Switchable.prototype.offsetIndex=function(a){
         var _this = this;
         var $content = _this.content;
@@ -360,13 +363,19 @@
         var h = null ;
         var i = null ;
 
-          /*  console.log( _this.current)
-            console.log( _this.len)*/
+        /*
+            a : false
+            如果 _this.current >= _this.len 成立
+            _this.current - _this.len 得到 超过len 的个数 i
+             i + _this.cloneCount - _op.step [超出的数 + (克隆数 - 一次走的步数)]
+            得到 无缝后 复位的 left
+
+        */
         a && _op.seamlessLoop ? (i = _this.current,
             _this.current <= 0 ? (i = _this.len - _op.step + _this.current,
                 w = -((_this.len + (_this.cloneCount + _this.current)) * _mainWidth),
                 h = -((_this.len + (_this.cloneCount + _this.current)) * _mainHeight)) : i -= _op.step,
-            _this.current = i) : _this.current >= _this.len && _op.seamlessLoop && (alert(_this.current+","+_this.len),i = _this.current - _this.len,
+            _this.current = i) : _this.current >= _this.len && _op.seamlessLoop && (alert(_this.current +"-"+ _this.len),i = _this.current - _this.len,
             w = -((i + _this.cloneCount - _op.step) * _mainWidth),
             h = -((i + _this.cloneCount - _op.step) * _mainHeight),
             _this.current = i),
@@ -374,7 +383,7 @@
                 left: w
             }) : null  != h && "top" == _op.direction && $content.css({
                 top: h
-            })
+            });
             //alert(w)
     };
     Switchable.prototype.autoPlay=function(){
