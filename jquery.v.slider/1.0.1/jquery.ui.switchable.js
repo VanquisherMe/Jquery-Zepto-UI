@@ -364,10 +364,17 @@
         var i = null ;
 
         /*
+            a:true
+            如果_this.current <= 0 c成立
+            _this.len - _op.step + _this.current 赋值给 _this.current
+            _this.len + (_this.cloneCount + _this.current)) 最后一次 prev 应该所在的位置
+            然后将值 赋给 _this.current
+
             a : false
             如果 _this.current >= _this.len 成立
             _this.current - _this.len 得到 超过len 的个数 i
-             i + _this.cloneCount - _op.step [超出的数 + (克隆数 - 一次走的步数)]
+             i + _this.cloneCount - _op.step [(超出的数 + 克隆数) - 一次走的步数]
+             这里的 减一次走的 步数 是 知道了 当前 应该走的 索引位置 ，然后 减一次步数 得到 走到这一步之前的位置
             得到 无缝后 复位的 left
 
         */
@@ -375,7 +382,7 @@
             _this.current <= 0 ? (i = _this.len - _op.step + _this.current,
                 w = -((_this.len + (_this.cloneCount + _this.current)) * _mainWidth),
                 h = -((_this.len + (_this.cloneCount + _this.current)) * _mainHeight)) : i -= _op.step,
-            _this.current = i) : _this.current >= _this.len && _op.seamlessLoop && (alert(_this.current +"-"+ _this.len),i = _this.current - _this.len,
+            _this.current = i) : _this.current >= _this.len && _op.seamlessLoop && (i = _this.current - _this.len,
             w = -((i + _this.cloneCount - _op.step) * _mainWidth),
             h = -((i + _this.cloneCount - _op.step) * _mainHeight),
             _this.current = i),
