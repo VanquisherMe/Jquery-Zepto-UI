@@ -740,4 +740,12 @@
     background-color: #2D93CA;
     color: #fff;
 }
+.tab-demo-04 .tab-arrow{
+    position: absolute;
+    width: 20px;
+    height: 10px;
+    left: 0;
+    top:10px;
+    background: #666666;
+}
 

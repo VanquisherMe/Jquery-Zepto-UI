@@ -109,6 +109,7 @@
         counter: 1, // 索引 计数器 [ false]
         hasSetup:!1, //是否允许
         hasArrow: !1,
+        arrowClass:"ui-switchable-arrow",
         callback: null,
         onNext: null,
         onPrev: null
@@ -119,24 +120,32 @@
     Switchable.prototype.eventBind = function () {
         var _this = this, _op = _this.options;
         //鼠标 移入 nav 的 时候
-        (_op.navClass && _this.nav) && ( _this.nav.on(_op.event, function () {
-            var $current = $(this);
-            clearInterval(_this.autoInterval);
-            //当前移入的 元素 记录在 current
-            0 === _op.delay ? (_this.current = $current.index(),
-                _this.switchTo(_this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)) : (clearTimeout(_this.eventTimer),
-                _this.eventTimer = setTimeout(function () {
-                    _this.current = $current.index();
+        _this.nav.each(function(d){
+            var $this =$(this);
+            $this.on(_op.event, function () {
+                var $current = $(this);
+                console.log($current)
+                clearInterval(_this.autoInterval);
+                //当前移入的 元素 记录在 current
+                0 === _op.delay ? (_this.current = d,
+                    _this.switchTo(_this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)) : (clearTimeout(_this.eventTimer),
+                    _this.eventTimer = setTimeout(function () {
+                        _this.current = d;
 
-                    _this.switchTo(_this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)
-                }, _op.delay));
+                        _this.switchTo(_this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)
+                    }, _op.delay));
 
-        }).on("mouseleave", function () {
-            clearTimeout(_this.eventTimer);
-            _op.mouseenterStopPlay || _this.autoPlay()
-        }));
+            }).on("mouseleave", function () {
+                clearTimeout(_this.eventTimer);
+                _op.mouseenterStopPlay || _this.autoPlay()
+            }),
+            "click" == _op.event && $this.bind("mouseover", function() {
+                    clearTimeout(_this.eventTimer),
+                        clearInterval(_this.autoInterval)
+                }
+            )
+        }),
         // 如果 event 是 click
-
         //鼠标 移入 切换 面板
         _op.mouseenterStopPlay && (_this.el.on("mouseenter", function () {
             clearInterval(_this.autoInterval)
@@ -211,8 +220,29 @@
         var _this = this, _op = _this.options;
         if(_op.hasSetup || _this.switchDefault(a),
                 _op.hasArrow){
+            var $arrowClass=_op.arrowClass;
+            var tableft=_this.nav.eq(a).outerWidth(!0) * a;
+            if(_this.isInit){
+                var $navParent = _this.nav.parent();
+                $navParent.prepend('<div class="' + $arrowClass + '"><b></b></div>').css({
+                    position:"relative"
+                }),
+                    _this.el.find("." + $arrowClass).css({
+                        left: tableft
+                    }),
+                    _this.isPlayLock = !1
 
+            }else{
+                setTimeout(function() {
+                        _this.isPlayLock = !1
+                    }
+                    , _op.speed),
+                    _this.el.find("." + $arrowClass).stop(!0).animate({
+                        left: tableft
+                    }, _op.speed, _op.easing)
+            }
         }
+        _this.isInit = !1;
     };
     Switchable.prototype.focus = function (i) {
         var _this = this, _op = _this.options;

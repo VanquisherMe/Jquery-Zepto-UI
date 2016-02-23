@@ -132,6 +132,7 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
     $(".tab-demo-04").switchable({
         type:"tab",
         defaultPanel:0,
+        event:"click",
         counter:!1, // 索引 计数器 [ false]
         contentClass:"tab-main",
         mainClass:"tab-panel",
@@ -139,7 +140,9 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         navClass:"tab-nav",
         navItem:"tab-item",
         navSelectedClass:"tab-active",
-        contentPage:"tab-page"
+        contentPage:"tab-page",
+        hasArrow:!0,
+        arrowClass:"tab-arrow"
 
     })
 
