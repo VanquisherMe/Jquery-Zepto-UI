@@ -31,7 +31,7 @@
             "tab" == _op.type && _op.navSelectedClass && _this.nav.length > 0) {
             var e = -1;
             _this.nav.each(function (i) {
-                var $this = a(this);
+                var $this = $(this);
                 $this.hasClass(_op.navSelectedClass) && (-1 == e ? e = i : $this.removeClass(_op.navSelectedClass))
             }),
             e > -1 && (_op.defaultPanel = e)
@@ -201,14 +201,18 @@
     };
     //默认选项卡 切换
     Switchable.prototype.switchDefault=function(a){
+
         var _this = this;
         _this.main.hide(),
             _this.main.eq(a).show();
     };
     //效果层
-    Switchable.prototype.tab = function () {
+    Switchable.prototype.tab = function (a) {
         var _this = this, _op = _this.options;
+        if(_op.hasSetup || _this.switchDefault(a),
+                _op.hasArrow){
 
+        }
     };
     Switchable.prototype.focus = function (i) {
         var _this = this, _op = _this.options;

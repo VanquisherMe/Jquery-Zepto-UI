@@ -117,7 +117,6 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         type:"slider",
         counter:!1, // 索引 计数器 [ false]
         direction:"top",
-
         contentClass:"slider-main",
         mainClass:"slider-panel",
         bodyExtra:"slider-extra",
@@ -127,6 +126,21 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         nextClass:"slider-next",
         navSelectedClass:"slider-active",
         contentPage:"slider-page"
+    });
+
+
+    $(".tab-demo-04").switchable({
+        type:"tab",
+        defaultPanel:0,
+        counter:!1, // 索引 计数器 [ false]
+        contentClass:"tab-main",
+        mainClass:"tab-panel",
+        bodyExtra:"tab-extra",
+        navClass:"tab-nav",
+        navItem:"tab-item",
+        navSelectedClass:"tab-active",
+        contentPage:"tab-page"
+
     })
 
 });
