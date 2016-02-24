@@ -110,6 +110,7 @@
         hasSetup:!1, //是否允许
         hasArrow: !1,
         arrowClass:"ui-switchable-arrow",
+        navIframe: "data-iframe",
         callback: null,
         onNext: null,
         onPrev: null
@@ -124,26 +125,24 @@
             var $this =$(this);
             $this.on(_op.event, function () {
                 var $current = $(this);
-                console.log($current)
                 clearInterval(_this.autoInterval);
                 //当前移入的 元素 记录在 current
                 0 === _op.delay ? (_this.current = d,
-                    _this.switchTo(_this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)) : (clearTimeout(_this.eventTimer),
+                    _this.switchTo(d, _op.seamlessLoop ? d + _this.cloneCount : d)) : (clearTimeout(_this.eventTimer),
                     _this.eventTimer = setTimeout(function () {
                         _this.current = d;
 
-                        _this.switchTo(_this.current, _op.seamlessLoop ? _this.current + _this.cloneCount : _this.current)
+                        _this.switchTo(d, _op.seamlessLoop ? d + _this.cloneCount : d)
                     }, _op.delay));
 
             }).on("mouseleave", function () {
                 clearTimeout(_this.eventTimer);
                 _op.mouseenterStopPlay || _this.autoPlay()
-            }),
-            "click" == _op.event && $this.bind("mouseover", function() {
+            })
+            /*"click" == _op.event && $this.bind("mouseover", function() {
                     clearTimeout(_this.eventTimer),
                         clearInterval(_this.autoInterval)
-                }
-            )
+                })*/
         }),
         // 如果 event 是 click
         //鼠标 移入 切换 面板
@@ -179,11 +178,15 @@
     };
     Switchable.prototype.switchMainTo = function (i) {
         var _this = this, _op = _this.options;
-        if (_this.switchType(i), (null != _op.callback)) {
+        if(_this.iframe(i),_this.isInit || _this.last != i){
+            if (_this.switchType(i),
+                    null != _op.callback) {
 
-            _op.callback.call(_this);
+                _op.callback.call(_this);
+            }
+            _this.last = i;
         }
-        _this.last = i;
+
     };
     //切换类型
     Switchable.prototype.switchType = function (i) {
@@ -200,9 +203,7 @@
                 break;
             /*            case "carousel":
              _this.carousel(a);
-             break;
-             case "imgscroll":
-             _this.imgscroll(a)*/
+             break;*/
             default:
                 //选择类型有误
                 console.log("\u9009\u62e9\u7c7b\u578b\u6709\u8bef");
@@ -223,7 +224,7 @@
             var $arrowClass=_op.arrowClass;
             var tableft=_this.nav.eq(a).outerWidth(!0) * a;
             if(_this.isInit){
-                var $navParent = _this.nav.parent();
+                var $navParent = _this.nav.parent().parent();
                 $navParent.prepend('<div class="' + $arrowClass + '"><b></b></div>').css({
                     position:"relative"
                 }),
@@ -322,8 +323,6 @@
             }, _op.speed, _op.easing))
     };
     Switchable.prototype.carousel = function () {
-    };
-    Switchable.prototype.imgscroll = function () {
     };
 
     //事件
@@ -442,7 +441,23 @@
         var _this = this;
         clearInterval(_this.autoInterval)
     };
+    Switchable.prototype.iframe =function(a){
+        var  _this = this, _op = _this.options,
+              $main = _this.main.eq(a),
+              $nav = _this.nav.eq(a),
+              _uri=$nav.attr(_op.navIframe);
+            if(_uri){
+                var $iframe= document.createElement("iframe");
+                $iframe.src = _uri,
+                    $iframe.border = 0,
+                    $iframe.frameborder = "no",
+                    $iframe.marginwidth = 0,
+                    $iframe.marginheight = 0,
+                    $main.html( $iframe ),
+                    $nav.removeAttr($nav)
+            }
 
+    };
 
     // Switchable plugin definition
     // =====================

@@ -373,14 +373,13 @@
                         var h = i.attr("data-src");
                         i.attr("src", h)
                     }
-                c.main.bind(d.event, function() {
+                c.main.bind(d.event, function(){
                         var b = a(this);
                         var e = b.find("." + d.imgscrollItemClass).attr("data-url");
                         c.main.removeClass(g),
                             b.addClass(g),
                             f.attr("src", e)
-                    }
-                ),
+                    }),
                     c.isInit = !1,
                     c.isPlayLock = !1
             } else {
