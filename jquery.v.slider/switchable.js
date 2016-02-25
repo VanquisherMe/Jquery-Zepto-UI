@@ -205,8 +205,7 @@
                     d.seamlessLoop && this.main.each(function() {
                             return e == a(this).data("switchable-clone-from") ? (g = g.add(a(this)),
                                 !1) : void 0
-                        }
-                    ),
+                        }),
                         d.callback.call(c, e, f, g)
                 }
                 c.last = b

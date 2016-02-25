@@ -60,9 +60,7 @@
             }
         );
 
-
         //初始化 完成
-
         var idefaultPanel = _op.defaultPanel;
 
         _this.last = idefaultPanel,  //记录 上次一次的 索引
@@ -178,7 +176,12 @@
     };
     Switchable.prototype.switchMainTo = function (i) {
         var _this = this, _op = _this.options;
-        if(_this.iframe(i),_this.isInit || _this.last != i){
+        console.log(  _this.isInit || _this.last != i +"*******");
+        console.log(_op.type)
+
+        if(_this.iframeFnc(i),
+            _this.isInit || _this.last != i){
+
             if (_this.switchType(i),
                     null != _op.callback) {
 
@@ -219,6 +222,7 @@
     //效果层
     Switchable.prototype.tab = function (a) {
         var _this = this, _op = _this.options;
+
         if(_op.hasSetup || _this.switchDefault(a),
                 _op.hasArrow){
             var $arrowClass=_op.arrowClass;
@@ -441,7 +445,7 @@
         var _this = this;
         clearInterval(_this.autoInterval)
     };
-    Switchable.prototype.iframe =function(a){
+    Switchable.prototype.iframeFnc =function(a){
         var  _this = this, _op = _this.options,
               $main = _this.main.eq(a),
               $nav = _this.nav.eq(a),
@@ -454,11 +458,10 @@
                     $iframe.marginwidth = 0,
                     $iframe.marginheight = 0,
                     $main.html( $iframe ),
-                    $nav.removeAttr($nav)
+                    $nav.removeAttr(_op.navIframe)
             }
 
     };
-
     // Switchable plugin definition
     // =====================
     function Plugin(option) {

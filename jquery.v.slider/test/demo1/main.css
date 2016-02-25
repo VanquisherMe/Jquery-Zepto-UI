@@ -733,6 +733,10 @@
     text-align: center;
     line-height: 170px;
     font-size: 60px;
+    position: absolute;
+    display: none;
+    left: 0;
+    top:0;
 }
 
 .tab-demo-04 .tab-active{
@@ -779,8 +783,20 @@
     text-align: center;
     line-height: 170px;
     font-size: 60px;
+    position: absolute;
+    left: 0;
+    top:0;
+    display: none;
 }
+.tab-demo-05 .tab-main .tab-panel iframe{
+    width: 170px;
+    height: 170px;
+    color:#fff;
+    text-align: center;
+    line-height: 170px;
+    font-size: 60px;
 
+}
 .tab-demo-05 .tab-active{
     background-color: #2D93CA;
     color: #fff;
