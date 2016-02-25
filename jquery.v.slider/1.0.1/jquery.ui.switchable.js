@@ -176,16 +176,19 @@
     };
     Switchable.prototype.switchMainTo = function (i) {
         var _this = this, _op = _this.options;
-        console.log(  _this.isInit || _this.last != i +"*******");
-        console.log(_op.type)
 
-        if(_this.iframeFnc(i),
+        if(_this.iframefnc(i),
             _this.isInit || _this.last != i){
 
             if (_this.switchType(i),
                     null != _op.callback) {
-
-                _op.callback.call(_this);
+                var e = i;
+                var $main = _this.main.eq(e);
+                _op.seamlessLoop && _this.main.each(function() {
+                    return e == $(this).data("switchable-clone-from") ? ($main = $main.add($(this)),
+                        !1) : void 0
+                }),
+                _op.callback.call(_this,i ,$main);
             }
             _this.last = i;
         }
@@ -445,12 +448,16 @@
         var _this = this;
         clearInterval(_this.autoInterval)
     };
-    Switchable.prototype.iframeFnc =function(a){
+    Switchable.prototype.iframefnc =function(a){
+
         var  _this = this, _op = _this.options,
               $main = _this.main.eq(a),
-              $nav = _this.nav.eq(a),
+              $nav = _this.nav.eq(a - _this.cloneCount),
               _uri=$nav.attr(_op.navIframe);
+        console.log(a)
+        console.log(_op.cloneCount)
             if(_uri){
+
                 var $iframe= document.createElement("iframe");
                 $iframe.src = _uri,
                     $iframe.border = 0,
@@ -462,6 +469,7 @@
             }
 
     };
+
     // Switchable plugin definition
     // =====================
     function Plugin(option) {
