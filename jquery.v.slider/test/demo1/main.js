@@ -112,7 +112,8 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         navSelectedClass:"slider-active",
         contentPage:"slider-page",
         //isAutoPlay:!0,
-        stayTime:1e3
+        stayTime:1e3,
+        callback:function(){}
     })
 
     $(".slider-demo-03_1").switchable({
@@ -164,6 +165,31 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         navSelectedClass:"tab-active",
         contentPage:"tab-page",
         delay:0,
+    })
+
+    $(".tab-demo-06").switchable({
+        type:"tab",
+        defaultPanel:0,
+        event:"click",
+        counter:!1, // 索引 计数器 [ false]
+        contentClass:"tab-main",
+        mainClass:"tab-panel",
+        bodyExtra:"tab-extra",
+        navClass:"tab-nav",
+        navItem:"tab-item",
+        navSelectedClass:"tab-active",
+        contentPage:"tab-page",
+        delay:0,
+        callback:function(a ,b ,c){
+            console.log(a)
+            console.log(b)
+
+            $.get(b.attr("data-get"),function(data){
+                console.log(data)
+                c.append(data)
+            })
+
+        }
     })
 
 });

@@ -46,8 +46,8 @@
                 _cloneCount = _this.cloneCount;
 
             for (var i = 0; _cloneCount > i; i++) {
-                front.push(_this.main.eq(i).clone().attr("data-switchable-clone", 1).data("switchable-clone-from", _cloneCount + i)),
-                    behind.push(_this.main.eq(_this.len - (i + 1)).clone().attr("data-switchable-clone", 1).data("switchable-clone-from", _this.len + i));
+                front.push(_this.main.eq(i).clone().attr("data-switchable-clone",  _cloneCount + i).data("switchable-clone-from", _cloneCount + i)),
+                    behind.push(_this.main.eq(_this.len - (i + 1)).clone().attr("data-switchable-clone",  _this.len + i).data("switchable-clone-from", _this.len + i));
             }
             for (var j = 0; _cloneCount > j; j++) {
                 _this.content.prepend(behind[j]).append(front[j]);
@@ -183,12 +183,15 @@
             if (_this.switchType(i),
                     null != _op.callback) {
                 var e = i;
-                var $main = _this.main.eq(e);
+                var $main = _this.main.eq(e),
+                    $nav=_this.nav.eq(e);
+
                 _op.seamlessLoop && _this.main.each(function() {
-                    return e == $(this).data("switchable-clone-from") ? ($main = $main.add($(this)),
+                    console.log(e +"=="+  $(this).data("switchable-clone-from"))
+                    return e == $(this).data("switchable-clone-from") ? ($(this).replaceWith($main.clone()),/* $main = $main.add($(this)),*/
                         !1) : void 0
                 }),
-                _op.callback.call(_this,i ,$main);
+                _op.callback.call(_this,i,$nav ,$main);
             }
             _this.last = i;
         }

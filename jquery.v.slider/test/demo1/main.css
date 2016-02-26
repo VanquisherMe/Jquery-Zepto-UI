@@ -809,3 +809,60 @@
     top:30px;
     background: #666666;
 }
+/*----------------demo06---------------------*/
+.tab-demo-06{
+    width: 170px;
+}
+
+.tab-demo-06 .tab-main{
+    position: relative;
+    width: 170px;
+    height: 150px;
+}
+
+.tab-demo-06 .tab-nav{
+
+}
+.tab-demo-06 .tab-nav .tab-item{
+    width: 40px;
+    height: 40px;
+    float: left;
+    cursor: pointer;
+    text-align: center;
+}
+.tab-demo-06 .tab-main {
+
+}
+.tab-demo-06 .tab-main .tab-panel{
+    width: 170px;
+    height: 170px;
+    color:#fff;
+    text-align: center;
+    line-height: 170px;
+    font-size: 60px;
+    position: absolute;
+    left: 0;
+    top:0;
+    display: none;
+}
+.tab-demo-06 .tab-main .tab-panel iframe{
+    width: 170px;
+    height: 170px;
+    color:#fff;
+    text-align: center;
+    line-height: 170px;
+    font-size: 60px;
+
+}
+.tab-demo-06 .tab-active{
+    background-color: #2D93CA;
+    color: #fff;
+}
+.tab-demo-06 .tab-arrow{
+    position: absolute;
+    width: 40px;
+    height: 10px;
+    left: 0;
+    top:30px;
+    background: #666666;
+}
