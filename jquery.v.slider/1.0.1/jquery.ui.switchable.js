@@ -455,12 +455,10 @@
 
         var  _this = this, _op = _this.options,
               $main = _this.main.eq(a),
-              $nav = _this.nav.eq(a - _this.cloneCount),
+              $nav = _this.nav.eq(_op.seamlessLoop? a - _this.cloneCount:a),
               _uri=$nav.attr(_op.navIframe);
-        console.log(a)
-        console.log(_op.cloneCount)
-            if(_uri){
 
+            if(_uri){
                 var $iframe= document.createElement("iframe");
                 $iframe.src = _uri,
                     $iframe.border = 0,
