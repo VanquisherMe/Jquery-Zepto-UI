@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>validate</title>
+</head>
+<style>
+    .inputLine{
+        height: 60px;
+    }
+    .inputLine span{
+        width: 130px;
+        height: 30px;
+        display: inline-block;
+    }
+</style>
+<body>
+    <div class="inputLine">
+       <span>用户名</span> <input type="text" id="username">
+        <div class="tips"></div>
+    </div>
+    <div class="inputLine">
+        <span>密码</span> <input type="password"  id="password">
+        <div class="tips"></div>
+    </div>
+    <div class="inputLine">
+        <span>请确认密码</span> <input type="password"  id="OncePassword">
+        <div class="tips"></div>
+    </div>
+    <div class="inputLine">
+        <span>验证手机</span> <input type="text" class="phone">
+        <div class="tips"></div>
+    </div>
+    <div class="inputLine">
+        <span>验证码</span> <input type="text" class="ValidateCode">
+        <div class="tips"></div>
+    </div>
+    <div class="inputLine">
+        <span>短信验证码</span> <input type="text" class="code">
+        <button>获取短信验证码</button>
+        <div class="tips"></div>
+    </div>
+
+    <button>提交</button>
+    <script  src="../../../public/require.js"></script>
+    <script  src="../../../mainConfig.js"></script>
+    <script>
+        requirejs(['main.js'])
+
+    </script>
+</body>
+</html>

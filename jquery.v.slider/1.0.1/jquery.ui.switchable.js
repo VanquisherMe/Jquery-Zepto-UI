@@ -10,6 +10,7 @@
         factory(jQuery);
     }
 }(function ($, easing, undefined) {
+    'use strict';
     var Switchable = function (element, options) {
 
         var _this = this, _op,

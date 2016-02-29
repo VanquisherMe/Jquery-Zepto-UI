@@ -18,7 +18,7 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         navSelectedClass:"focus-active",
         contentPage:"focus-page"
 
-    })
+    });
 
     $(".slider-demo-02").switchable({
         type:"slider",

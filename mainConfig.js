@@ -9,8 +9,9 @@ requirejs.config({
     "paths": {
         "jquery": "public/jquery",
         //"jquery.easing":"public/jquery.easing",
-        "jquery.ui.switchable":"jquery.v.slider/1.0.1/jquery.ui.switchable"
-
+        "jquery.ui.switchable":"jquery.v.slider/1.0.1/jquery.ui.switchable",
+        "jquery.ui.validateRegExp":"jquery.v.verify/1.0.1/jquery.ui.validateRegExp",
+        "jquery.ui.validate":"jquery.v.verify/1.0.1/jquery.ui.validate"
         //"layer":"public/layer/layer"
 
     },
