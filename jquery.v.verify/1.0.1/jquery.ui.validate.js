@@ -57,24 +57,26 @@
 
         },
         eventVal:function(b){
+            console.log(b)
 
             var _op=this.options
 
                 $(b.ValidateClass).data("isFcous",true).focus(function(){
                     $(this).data("isFcous",true);
                     b.onFocusCall($(this))
+
+
                 }).blur(function(){
+                    console.log($(this))
                     var _this=this,
                         _mod = b.onBlurMod,
-                        _intBol=true,
                         $this=$(this),
-                        _str=$(this).val();
+                        _str=$(this).val(),
+                        _intBol=b.isNull(_str);
 
-                    console.log(b.isNull(_str) && $this.data("isFcous"))
-                    if(!(b.isNull(_str) && $this.data("isFcous"))) {
+                    if(!(_intBol && $this.data("isFcous"))) {
 
                         $.each(_mod, function (i, va) {
-                            console.log(va)
 
                             $this.data("isFcous", va.regFnc(_str));
 
@@ -87,7 +89,9 @@
                         });
                     }
                     console.log($this.data("isFcous"))
-                    if($this.data("isFcous")) b.succeed($this)
+                    console.log(_intBol)
+                    if($this.data("isFcous") && !_intBol) b.succeed($this)
+                    if($this.data("isFcous") && _intBol) b.initCall($this)
                 })
 
 

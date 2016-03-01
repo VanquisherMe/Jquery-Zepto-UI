@@ -6,28 +6,54 @@
 </head>
 <style>
     .inputLine{
+        position: relative;
         height: 60px;
+        width: 600px;
+        border: 1px solid #000000;
     }
     .inputLine span{
         width: 130px;
         height: 30px;
         display: inline-block;
+
     }
     .errorTips{
         border:1px solid #b61b1f ;
     }
+    .icon{
+        display: block;
+        width: 30px;
+        height:30px;
+        position: absolute;
+        background: red;
+        right: 0;
+        top:0;
+    }
+    .sucess{
+        background: url("img/sucess.png") no-repeat center;
+    }
 </style>
 <body>
     <div class="inputLine">
-       <span>用户名</span> <input type="text" id="username" class="validates">
+        <div class="from-ifo">
+            <span>用户名</span> <input type="text" id="username" class="validates">
+            <label class="icon"></label>
+        </div>
+
         <div class="error"></div>
     </div>
     <div class="inputLine">
-        <span>密码</span> <input type="password"  id="password" class="validates">
-        <div class="tips"></div>
+        <div class="from-ifo">
+            <span>密码</span> <input type="text"  id="password" class="validates">
+            <label class="icon"></label>
+        </div>
+        <div class="error"></div>
     </div>
     <div class="inputLine">
-        <span>请确认密码</span> <input type="password"  id="OncePassword" class="validates">
+        <div class="from-ifo">
+            <span>请确认密码</span> <input type="password"  id="OncePassword" class="validates">
+            <label class="icon"></label>
+        </div>
         <div class="tips"></div>
     </div>
     <div class="inputLine">
