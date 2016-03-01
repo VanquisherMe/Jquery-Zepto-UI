@@ -13,8 +13,6 @@
 }(function (undefined) {
 
   var validateRegExp= {
-        isNull:"\\S+",
-        //是否为空
         decmal: "^([+-]?)\\d*\\.\\d+$",
         // 浮点数
         decmal1: "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$",

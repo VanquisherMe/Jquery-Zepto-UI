@@ -35,7 +35,6 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                 $("#morePinDiv").removeClass().addClass("intelligent-error hide");
             }
         },
-
         pwd: {
             onFocus: "<span>6-20位字符，建议由字母，数字和符号两种以上组合</span>",
             succeed: "",
@@ -79,21 +78,69 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
             error: ""
         }
     };
-    var validateFunction ={
 
-    };
-    var register = [
-        {
-            validate : "#username",
-            error:[
-                {re:!1,mags:"请不要设置为空"},
-                {re:!1,mags:"请不要设置为空"},
-            ]
-        },
-        {
+    var register={
+        regName:{
+            ValidateClass:"#username",
+            isNull:function(str){
+                var reg_isNull = new RegExp(validateRegExp.notempty).test(str)
+                return (!reg_isNull || typeof str != "string");
+            },
+            isNullCall:function(t){
+                t.parent().find(".error").show().addClass("errorTips").html("请输入用户名请输入用户名");
+            },
+            onFocusCall:function(t){
+                console.log(t)
+                t.parent().find(".error").removeClass("errorTips").html("4-20位字符,支持汉字、字母、数字及\"-\"、\"_\"组合")
+            },
+            onBlurMod:{
+                        //ajax 检测 用户名是否相同
+                        /*beUsed: function(t,s) {
+                            if(new RegExp(validateRegExp.username+"{6,20}").test(s)){
+                                t.parent().find(".error").html("该用户名已被使用，请重新输入。如果您是该用户，请立刻<a href='......' class='flk13'>登录</a>");
+                                return false;
+                            }
+                        },*/
+                        badLength:{
+                            regFnc:function(str){
+                                var strlen=str.replace(/[^\x00-\xff]/g, "**")
+                                return strlen.length >= 4 && strlen.length <= 20
+                            },
+                            magsCall: function(t){
+                                //alert("用户名长度只能在4-20位字符之间")
+
+                                t.parent().find(".error").show().addClass("errorTips").html("用户名长度只能在4-20位字符之间");
+                            }
+                        },
+                        badFormat:{
+                            regFnc:function(str){
+                                return new RegExp(validateRegExp.username).test(str);
+                            },
+                            magsCall: function(t){
+                                //alert("用户名只能由中文、英文、数字及\"-\"、\"_\"组成")
+
+                                t.parent().find(".error").show().addClass("errorTips").html("用户名只能由中文、英文、数字及\"-\"、\"_\"组成");
+                            }
+                        },
+                        fullNumberName:{
+                            regFnc:function(str){
+                                return !new RegExp(validateRegExp.fullNumber).test(str);
+                            },
+                            magsCall: function(t){
+                                //alert("用户名不能是纯数字，请重新输入")
+                                t.parent().find(".error").show().addClass("errorTips").html("用户名不能是纯数字，请重新输入");
+                            }
+                        }
+
+            },
+            succeed:function(t){
+                t.parent().find(".error").hide().removeClass("errorTips").empty()
+            }
+
 
         }
-    ]
+    };
 
+    validate.init(register)
 
 });
