@@ -11,58 +11,84 @@
         factory();
     }
 }(function ($,validateRegExp ,undefined) {
-    var Validate = function(){};
+    var Validate = function(options){
+        this.option =options;
+    };
 
     Validate.prototype = {
         constructor:Validate,
-        init:function(obj){
-            var _this=this
-            $.each(obj,function(i , va){
-
+        init:function(){
+            var _this=this,_valObj=this.option.valObj;
+            $.each(_valObj,function(i , va){
                 //$(va.ValidateClass).data("validate",va)
                 _this.eventVal(va)
             });
-
         },
         eventVal:function(b){
-            console.log(b)
-
-            var _op=this.options
-
                 $(b.ValidateClass).data("isFcous",true).focus(function(){
                     $(this).data("isFcous",true);
                         console.log()
                  typeof  b.onFocusCall == "function" &&   b.onFocusCall($(this))
 
                 }).blur(function(){
-                    console.log($(this))
+
                     var _this=this,
                         _mod = b.onBlurMod,
                         $this=$(this),
                         _str=$(this).val(),
-                        _intBol= typeof b.isNull == "boolean" ? b.isNull: b.isNull(_str);
+                        _intBol= typeof b.isNull == "boolean" ? b.isNull= !0: b.isNull(_str);
 
                     if(!(_intBol && $this.data("isFcous"))) {
-
                         _mod && $.each(_mod, function (i, va) {
 
                             $this.data("isFcous", va.regFnc(_str));
-
                             if (!$this.data("isFcous")) {
-
                                 va.magsCall && va.magsCall($this);
                                 return $this.data("isFcous");
                             }
 
                         });
                     }
-                    console.log($this.data("isFcous"))
-                    console.log(_intBol)
-                    if($this.data("isFcous") && !_intBol) b.succeed && b.succeed($this)
-                    if($this.data("isFcous") && _intBol)  b.succeed && b.initCall($this)
+
+                    if($this.data("isFcous") && !_intBol) b.succeed && b.succeed($this);
+                    if($this.data("isFcous") && _intBol)  b.succeed && b.initCall($this);
                 })
 
 
+        },
+        submitCtrl:function(){
+            var _this=this,
+                _valObj=this.option.valObj,
+                _subClass=this.option.subClass;
+
+            $(_subClass).on("click",function(){
+                    var submitIint=!0
+
+                $.each(_valObj,function(i , va){
+
+                   var $ValidateClass=$(va.ValidateClass),
+                       str=$ValidateClass.val(),
+                       _intBol= typeof va.isNull == "boolean" ? va.isNull = !0: va.isNull(str);
+                    if(va.isNull){
+                        va.isNullCall($ValidateClass);
+                    }else{
+                        $.each(va, function (key, vaj) {
+
+
+
+                            /*$this.data("isFcous", va.regFnc(_str));
+                             if (!$this.data("isFcous")) {
+                             va.magsCall && va.magsCall($this);
+                             return $this.data("isFcous");
+                             }*/
+
+                        });
+                    }
+
+                });
+
+
+            })
         }
 
 
