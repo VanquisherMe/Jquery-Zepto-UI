@@ -51,23 +51,32 @@
     </div>
     <div class="inputLine">
         <div class="from-ifo">
-            <span>请确认密码</span> <input type="password"  id="OncePassword" class="validates">
+            <span>请确认密码</span> <input type="text"  id="OncePassword" class="validates">
             <label class="icon"></label>
         </div>
-        <div class="tips"></div>
+        <div class="error"></div>
     </div>
     <div class="inputLine">
-        <span>验证手机</span> <input type="text" class="phone validates">
-        <div class="tips"></div>
+        <div class="from-ifo">
+            <span>验证手机</span> <input type="text" id="phone" class=" validates" maxlength="11">
+            <label class="icon"></label>
+        </div>
+        <div class="error"></div>
     </div>
     <div class="inputLine">
-        <span>验证码</span> <input type="text" class="ValidateCode validates">
-        <div class="tips"></div>
+        <div class="from-ifo">
+            <span>验证码</span> <input type="text" id="ValidateCode" class=" validates">
+
+        </div>
+        <div class="error"></div>
     </div>
     <div class="inputLine">
-        <span>短信验证码</span> <input type="text" class="code validates">
-        <button>获取短信验证码</button>
-        <div class="tips"></div>
+        <div class="from-ifo">
+            <span>短信验证码</span> <input type="text" id="code" class=" validates">
+            <button>获取短信验证码</button>
+
+        </div>
+        <div class="error"></div>
     </div>
 
     <button>提交</button>

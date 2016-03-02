@@ -11,42 +11,10 @@
         factory();
     }
 }(function ($,validateRegExp ,undefined) {
-/*
-        console.log(validateRegExp);
-        var Validate=function(elements , options){
-            var _this = this, _op,
-                _initState = !0;
-            _this.el = $(elements);
-            _op = _this.options = $.extend({}, Validate.DEFAULTS, options || {});
+    var Validate = function(){};
 
-            $.each(obj,function(i , va){
-
-                $(va.ValidatClass).data("validate",va)
-            });
-
-        };
-
-        Validate.VERSION = '1.0.0';
-        Validate.DEFAULTS={
-
-
-
-        };
-        Validate.prototype.eventfocus =function(){
-            var _this = this, _op =_this.options;
-
-        };
-
-        function Plugin(option) {
-
-            return new Validate(this, option)
-
-        }
-
-        $.fn.validate = Plugin;
-        $.fn.validate.Constructor = Validate;*/
-
-    var Validate = {
+    Validate.prototype = {
+        constructor:Validate,
         init:function(obj){
             var _this=this
             $.each(obj,function(i , va){
@@ -63,8 +31,8 @@
 
                 $(b.ValidateClass).data("isFcous",true).focus(function(){
                     $(this).data("isFcous",true);
-                    b.onFocusCall($(this))
-
+                        console.log()
+                 typeof  b.onFocusCall == "function" &&   b.onFocusCall($(this))
 
                 }).blur(function(){
                     console.log($(this))
@@ -72,17 +40,17 @@
                         _mod = b.onBlurMod,
                         $this=$(this),
                         _str=$(this).val(),
-                        _intBol=b.isNull(_str);
+                        _intBol= typeof b.isNull == "boolean" ? b.isNull: b.isNull(_str);
 
                     if(!(_intBol && $this.data("isFcous"))) {
 
-                        $.each(_mod, function (i, va) {
+                        _mod && $.each(_mod, function (i, va) {
 
                             $this.data("isFcous", va.regFnc(_str));
 
                             if (!$this.data("isFcous")) {
 
-                                va.magsCall($this);
+                                va.magsCall && va.magsCall($this);
                                 return $this.data("isFcous");
                             }
 
@@ -90,8 +58,8 @@
                     }
                     console.log($this.data("isFcous"))
                     console.log(_intBol)
-                    if($this.data("isFcous") && !_intBol) b.succeed($this)
-                    if($this.data("isFcous") && _intBol) b.initCall($this)
+                    if($this.data("isFcous") && !_intBol) b.succeed && b.succeed($this)
+                    if($this.data("isFcous") && _intBol)  b.succeed && b.initCall($this)
                 })
 
 
