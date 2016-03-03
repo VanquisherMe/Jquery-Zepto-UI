@@ -27,16 +27,16 @@
         eventVal:function(b){
                 $(b.ValidateClass).data("isFcous",true).focus(function(){
                     $(this).data("isFcous",true);
-                        console.log()
+
                  typeof  b.onFocusCall == "function" &&   b.onFocusCall($(this))
 
                 }).blur(function(){
 
                     var _this=this,
-                        _mod = b.onBlurMod,
+                        _mod = typeof b.onBlurMod == "boolean" ? b.onBlurMod=!1 : b.onBlurMod,
                         $this=$(this),
                         _str=$(this).val(),
-                        _intBol= typeof b.isNull == "boolean" ? b.isNull= !0: b.isNull(_str);
+                        _intBol=  typeof b.isNull == "function" ? b.isNull(_str) : b.isNull;
 
                     if(!(_intBol && $this.data("isFcous"))) {
                         _mod && $.each(_mod, function (i, va) {
@@ -62,17 +62,17 @@
         submitCtrl:function(){
             var _this=this,
                 _valObj=this.option.valObj,
-                _subClass=this.option.subClass;
-
-            $(_subClass).data("isCommit",false).on("click",function(){
-                    var submitIint=!0,$this=$(this)
-
+                _subClass=this.option.subClass,
+                _subSucceedCall = this.option.subSucceedCall,
+                _subErrorCall = this.option.subErrorCall;
+            $(_subClass).on("click",function(){
+                    var submitIint=!0,$this=$(this),isCommit=!0;
                 $.each(_valObj,function(i , va){
 
                    var $ValidateClass=$(va.ValidateClass),
                        regFncBol=!1,
                        str=$ValidateClass.val(),
-                       _intBol = typeof va.isNull == "function" ? va.isNull(str) : va.isNull = !0,
+                       _intBol = typeof va.isNull == "function" ? va.isNull(str) : va.isNull,
                        _onBlurMod = typeof  va.onBlurMod == "boolean" ? va.onBlurMod = !1 :va.onBlurMod;
                         console.log(_intBol)
                     if(_intBol){
@@ -83,22 +83,25 @@
 
                                 regFncBol = typeof vaj.regFnc =="function" ? vaj.regFnc(str) :vaj.regFnc;
                                 !regFncBol && typeof vaj.magsCall == "function" && vaj.magsCall($ValidateClass) ;
-                                    return regFncBol;
+
                             }else{
                                 vaj.magsCall && vaj.magsCall($ValidateClass);
                             }
 
+                            if(isCommit && !regFncBol){
+                                isCommit =!1
+                            }
+
+                            return regFncBol;
                         });
 
                     }
 
                 });
 
-
-
+                isCommit ? _subSucceedCall(): _subErrorCall && _subErrorCall()
             })
         }
-
 
     };
 
