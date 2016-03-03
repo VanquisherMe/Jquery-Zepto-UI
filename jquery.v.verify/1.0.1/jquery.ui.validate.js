@@ -54,7 +54,7 @@
                         });
                     }
                     if($this.data("isFcous") && !_intBol) b.succeed && b.succeed($this);
-                    if($this.data("isFcous") && _intBol)  b.succeed && b.initCall($this);
+                    if($this.data("isFcous") && _intBol)  b.initCall && b.initCall($this);
                 })
 
 
@@ -76,6 +76,7 @@
                        _onBlurMod = typeof  va.onBlurMod == "boolean" ? va.onBlurMod = !1 :va.onBlurMod;
                         console.log(_intBol)
                     if(_intBol){
+                        isCommit && (isCommit = !1)
                         va.isNullCall($ValidateClass);
                     }else{
                         _onBlurMod  && $.each(_onBlurMod, function (key, vaj) {
