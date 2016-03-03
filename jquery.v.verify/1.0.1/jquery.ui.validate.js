@@ -14,7 +14,6 @@
     var Validate = function(options){
         this.option =options;
     };
-
     Validate.prototype = {
         constructor:Validate,
         init:function(){
