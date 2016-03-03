@@ -29,6 +29,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                             }
                         },*/
                         badLength:{
+                            isCustom:!1,
                             regFnc:function(str){
                                 var strlen=str.replace(/[^\x00-\xff]/g, "**")
                                 return strlen.length >= 4 && strlen.length <= 20
@@ -39,6 +40,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                             }
                         },
                         badFormat:{
+                            isCustom:!1,
                             regFnc:function(str){
                                 return new RegExp(validateRegExp.username).test(str);
                             },
@@ -48,6 +50,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                             }
                         },
                         fullNumberName:{
+                            isCustom:!1,
                             regFnc:function(str){
                                 return !new RegExp(validateRegExp.fullNumber).test(str);
                             },
@@ -76,12 +79,14 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
             },
             onFocusCall:function(t){
                 t.parent().find(".icon").hasClass("sucess") && t.parent().find(".icon").removeClass("sucess");
-                t.parent().parent().find(".error").show().removeClass("errorTips").html("6-20位字符，建议由字母，数字和符号两种以上组合")
+                t.parent().parent().find(".error").show().removeClass("errorTips").html("6-20位字符，字母，数字和符号请使用两种以上组合")
             },
             onBlurMod:{
                 badLength:  {
+                    isCustom:!1,
                     regFnc:function(str){
                         console.log(str.length >= 6 && str.length <= 20)
+                        console.log(str.length)
                         return str.length >= 6 && str.length <= 20
                     },
                     magsCall: function(t){
@@ -91,15 +96,18 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                     }
                 },
                 badFormat:{
+                    isCustom:!1,
                     regFnc:function(str){
+                        console.log( new RegExp(validateRegExp.password).test(str))
                         return new RegExp(validateRegExp.password).test(str);
                     },
                     magsCall: function(t){
                         //alert("用户名只能由中文、英文、数字及\"-\"、\"_\"组成")
-                        t.parent().parent().find(".error").show().addClass("errorTips").html("用户名只能由中文、英文、数字及\"-\"、\"_\"组成");
+                        t.parent().parent().find(".error").show().addClass("errorTips").html("密码只能由英文、数字及标点符号组成");
                     }
                 },
                 simplePwd:{
+                    isCustom:!1,
                     regFnc:function(str){
                         var _weakPwdArray =!0;
                         for (var i = 0; i < weakPwdArray.length; i++) {
@@ -108,13 +116,30 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                                 break;
                             }
                         }
-                        console.log(_weakPwdArray)
+                        console.log(_weakPwdArray+"@@@@@@@@@@@@@@@@@@@@@")
                         return _weakPwdArray;
                         //return !new RegExp(validateRegExp.fullNumber).test(str);
                     },
                     magsCall: function(t){
                         //alert("用户名不能是纯数字，请重新输入")
                         t.parent().parent().find(".error").show().addClass("errorTips").html("该密码比较简单，有被盗风险，建议您更改为复杂密码");
+                    }
+                },
+                fitPwd:{
+                    isCustom:!0,
+                    regFnc:!0,
+                    magsCall: function(t){
+                        //alert("用户名不能是纯数字，请重新输入")
+                        var _password =$("#password").val();
+                        var _pwdRepeat= $("#OncePassword").val();
+                        if(!(_password.length === _pwdRepeat.length && _password === _pwdRepeat)){
+                            $("#OncePassword").parent().parent().find(".error").show().addClass("errorTips").html("两次密码不正确");
+                            $("#OncePassword").parent().find(".icon").remove("sucess")
+                        }else {
+                            $("#OncePassword").parent().find(".icon").addClass("sucess");
+                            $("#OncePassword").parent().parent().find(".error").hide().removeClass("errorTips").empty()
+                        }
+
                     }
                 }
 
@@ -142,6 +167,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
             },
             onBlurMod:{
                 badLength:  {
+                    isCustom:!1,
                     regFnc:function(str){
                         console.log(str.length >= 6 && str.length <= 20)
                         return str.length >= 6 && str.length <= 20
@@ -152,15 +178,17 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                     }
                 },
                 badFormat:{
+                    isCustom:!1,
                     regFnc:function(str){
                         return new RegExp(validateRegExp.password).test(str);
                     },
                     magsCall: function(t){
                         //alert("用户名只能由中文、英文、数字及\"-\"、\"_\"组成")
-                        t.parent().parent().find(".error").show().addClass("errorTips").html("用户名只能由中文、英文、数字及\"-\"、\"_\"组成");
+                        t.parent().parent().find(".error").show().addClass("errorTips").html("密码只能由英文、数字及标点符号组成");
                     }
                 },
                 fitPwd:{
+                    isCustom:!1,
                     regFnc:function(str){
                         var _password =$("#password").val();
 
@@ -197,6 +225,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
             },
             onBlurMod:{
                 badFormat:{
+                    isCustom:!1,
                     regFnc:function(str){
                         return new RegExp(validateRegExp.mobile).test(str);
                     },
@@ -216,14 +245,25 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
         },
         validateCode:{
             ValidateClass:"#ValidateCode",
-            isNull: !0,
+            isNull:function(str){
+                var reg_isNull = new RegExp(validateRegExp.empty).test(str);
+                return (reg_isNull);
+            },
             isNullCall:function(t){
                 t.parent().parent().find(".error").show().addClass("errorTips").html("请输入验证码");
             },
-            onFocusCall:!0,
+            onFocusCall:function(t){
+
+                t.parent().parent().find(".error").hide().removeClass("errorTips").empty()
+            },
             onBlurMod:!1,
-            succeed:!1,
-            initCall:!1
+            succeed:function(t){
+
+                t.parent().parent().find(".error").hide().removeClass("errorTips").empty()
+            },
+            initCall:function(t){
+                t.parent().parent().find(".error").hide().removeClass("errorTips").empty()
+            }
         },
         code:{
             ValidateClass:"#code",
@@ -251,7 +291,10 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
 
    var regr = new Validate({
        valObj:register,
-       subClass:".regbtn"
+       subClass:".regbtn",
+       subCall:function(){
+           alert("开始提交")
+       }
 
    });
     regr.init();
