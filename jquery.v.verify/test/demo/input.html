@@ -34,52 +34,60 @@
     }
 </style>
 <body>
-    <div class="inputLine">
-        <div class="from-ifo">
-            <span>用户名</span> <input type="text" id="username" class="validates">
-            <label class="icon"></label>
-        </div>
+    <div>
+        <div class="inputLine">
+            <div class="from-ifo">
+                <span>用户名</span> <input type="text" id="username" class="validates">
+                <label class="icon"></label>
+            </div>
 
-        <div class="error"></div>
-    </div>
-    <div class="inputLine">
-        <div class="from-ifo">
-            <span>密码</span> <input type="text"  id="password" class="validates">
-            <label class="icon"></label>
+            <div class="error"></div>
         </div>
-        <div class="error"></div>
-    </div>
-    <div class="inputLine">
-        <div class="from-ifo">
-            <span>请确认密码</span> <input type="text"  id="OncePassword" class="validates">
-            <label class="icon"></label>
+        <div class="inputLine">
+            <div class="from-ifo">
+                <span>密码</span> <input type="text"  id="password" class="validates">
+                <label class="icon"></label>
+            </div>
+            <div class="error"></div>
         </div>
-        <div class="error"></div>
-    </div>
-    <div class="inputLine">
-        <div class="from-ifo">
-            <span>验证手机</span> <input type="text" id="phone" class=" validates" maxlength="11">
-            <label class="icon"></label>
+        <div class="inputLine">
+            <div class="from-ifo">
+                <span>请确认密码</span> <input type="text"  id="OncePassword" class="validates">
+                <label class="icon"></label>
+            </div>
+            <div class="error"></div>
         </div>
-        <div class="error"></div>
-    </div>
-    <div class="inputLine">
-        <div class="from-ifo">
-            <span>验证码</span> <input type="text" id="ValidateCode" class=" validates">
+        <div class="date">
+            <div class="city" data-stat="0">
+                如果这里有一个操作 改变状态
+            </div>
+            <div class="error"></div>
+        </div>
+        <div class="inputLine">
+            <div class="from-ifo">
+                <span>验证手机</span> <input type="text" id="phone" class=" validates" maxlength="11">
+                <label class="icon"></label>
+            </div>
+            <div class="error"></div>
+        </div>
+        <div class="inputLine">
+            <div class="from-ifo">
+                <span>验证码</span> <input type="text" id="ValidateCode" class=" validates">
 
+            </div>
+            <div class="error"></div>
         </div>
-        <div class="error"></div>
-    </div>
-    <div class="inputLine">
-        <div class="from-ifo">
-            <span>短信验证码</span> <input type="text" id="code" class=" validates">
-            <button>获取短信验证码</button>
+        <div class="inputLine">
+            <div class="from-ifo">
+                <span>短信验证码</span> <input type="text" id="code" class=" validates">
+                <button>获取短信验证码</button>
 
+            </div>
+            <div class="error"></div>
         </div>
-        <div class="error"></div>
+        <button class="regbtn">提交</button>
     </div>
 
-    <button class="regbtn">提交</button>
     <script  src="../../../public/require.js"></script>
     <script  src="../../../mainConfig.js"></script>
     <script>

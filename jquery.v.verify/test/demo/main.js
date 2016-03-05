@@ -25,6 +25,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
     var register={
         regName: {
             ValidateClass:"#username",
+            isInput:!0,
             isNull:function(str){
                 var reg_isNull = new RegExp(validateRegExp.empty).test(str);
                 return (reg_isNull);
@@ -33,6 +34,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                 t.parent().parent().find(".error").show().addClass("errorTips").html("请输入用户名请输入用户名");
             },
             onFocusCall:function(t){
+                $(".city").parent().find(".error").hide().removeClass("errorTips").empty()
                 t.parent().find(".icon").hasClass("sucess") && t.parent().find(".icon").removeClass("sucess");
                 t.parent().parent().find(".error").show().removeClass("errorTips").html("4-20位字符,支持汉字、字母、数字及\"-\"、\"_\"组合")
             },
@@ -86,6 +88,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
         },
         pwd:{
             ValidateClass:"#password",
+            isInput:!0,
             isNull:function(str){
                 var reg_isNull = new RegExp(validateRegExp.empty).test(str);
                 return (reg_isNull);
@@ -169,6 +172,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
         },
         pwdRepeat:{
             ValidateClass:"#OncePassword",
+            isInput:!0,
             isNull:function(str){
                 var reg_isNull = new RegExp(validateRegExp.empty).test(str);
                 return (reg_isNull);
@@ -177,6 +181,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                 t.parent().parent().find(".error").show().addClass("errorTips").html("请输入密码");
             },
             onFocusCall:function(t){
+                $(".city").parent().find(".error").hide().removeClass("errorTips").empty()
                 t.parent().find(".icon").hasClass("sucess") && t.parent().find(".icon").removeClass("sucess");
                 t.parent().parent().find(".error").show().removeClass("errorTips").html("请再次输入密码")
             },
@@ -225,8 +230,23 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                 t.parent().parent().find(".error").hide().removeClass("errorTips").empty()
             }
         },
+        city:{
+            isInput:!1,
+            stateCall:function(){
+                var $city=$(".city"),
+                    _citystat= Number($city.attr("data-stat"));
+                console.log(!_citystat)
+                if(!_citystat){
+                    $city.parent().find(".error").show().addClass("errorTips").html("请上传图片");
+                    return false
+
+                }
+                return true
+            }
+        },
         phone: {
             ValidateClass:"#phone",
+            isInput:!0,
             isNull:function(str){
                 var reg_isNull = new RegExp(validateRegExp.empty).test(str);
                 return (reg_isNull);
@@ -235,6 +255,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                 t.parent().parent().find(".error").show().addClass("errorTips").html("请输入手机号码");
             },
             onFocusCall:function(t){
+                $(".city").parent().find(".error").hide().removeClass("errorTips").empty()
                 t.parent().find(".icon").hasClass("sucess") && t.parent().find(".icon").removeClass("sucess");
                 t.parent().parent().find(".error").show().removeClass("errorTips").html("完成验证后请用该手机号码，登录或者找回密码")
             },
@@ -260,6 +281,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
         },
         validateCode:{
             ValidateClass:"#ValidateCode",
+            isInput:!0,
             isNull:function(str){
                 var reg_isNull = new RegExp(validateRegExp.empty).test(str);
                 return (reg_isNull);
@@ -268,7 +290,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                 t.parent().parent().find(".error").show().addClass("errorTips").html("请输入验证码");
             },
             onFocusCall:function(t){
-
+                $(".city").parent().find(".error").hide().removeClass("errorTips").empty()
                 t.parent().parent().find(".error").hide().removeClass("errorTips").empty()
             },
             onBlurMod:!1,
@@ -282,6 +304,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
         },
         code:{
             ValidateClass:"#code",
+            isInput:!0,
             isNull:function(str){
                 var reg_isNull = new RegExp(validateRegExp.empty).test(str);
                 return (reg_isNull);
@@ -290,7 +313,7 @@ requirejs(['jquery',"jquery.ui.validateRegExp",'jquery.ui.validate'],function($,
                 t.parent().parent().find(".error").show().addClass("errorTips").html("请输入短信验证码");
             },
             onFocusCall:function(t){
-
+                $(".city").parent().find(".error").hide().removeClass("errorTips").empty()
                 t.parent().parent().find(".error").show().removeClass("errorTips").html("请输入短信验证码，完成验证")
             },
             onBlurMod:!1,

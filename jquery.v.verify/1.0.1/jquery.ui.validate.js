@@ -20,7 +20,7 @@
             var _this=this,_valObj=this.option.valObj;
             $.each(_valObj,function(i , va){
                 //$(va.ValidateClass).data("validate",va)
-                _this.eventVal(va)
+                if(va.isInput) _this.eventVal(va)
             });
         },
         eventVal:function(b){
@@ -68,35 +68,41 @@
                     var submitIint=!0,$this=$(this),isCommit=!0;
                 $.each(_valObj,function(i , va){
 
-                   var $ValidateClass=$(va.ValidateClass),
-                       regFncBol=!1,
-                       str=$ValidateClass.val(),
-                       _intBol = typeof va.isNull == "function" ? va.isNull(str) : va.isNull,
-                       _onBlurMod = typeof  va.onBlurMod == "boolean" ? va.onBlurMod = !1 :va.onBlurMod;
+                    if(va.isInput){
+                        var $ValidateClass=$(va.ValidateClass),
+                            regFncBol=!1,
+                            str=$ValidateClass.val(),
+                            _intBol = typeof va.isNull == "function" ? va.isNull(str) : va.isNull,
+                            _onBlurMod = typeof  va.onBlurMod == "boolean" ? va.onBlurMod = !1 :va.onBlurMod;
                         console.log(_intBol)
-                    if(_intBol){
-                        isCommit && (isCommit = !1)
-                        va.isNullCall($ValidateClass);
+
+                        if(_intBol){
+                            isCommit && (isCommit = !1)
+                            va.isNullCall($ValidateClass);
+                        }else{
+                            _onBlurMod  && $.each(_onBlurMod, function (key, vaj) {
+                                if(!vaj.isCustom){
+
+                                    regFncBol = typeof vaj.regFnc =="function" ? vaj.regFnc(str) :vaj.regFnc;
+                                    !regFncBol && typeof vaj.magsCall == "function" && vaj.magsCall($ValidateClass) ;
+
+                                }else{
+                                    vaj.magsCall && vaj.magsCall($ValidateClass);
+                                }
+
+                                if(isCommit && !regFncBol){
+                                    isCommit =!1
+                                }
+
+                                return regFncBol;
+                            });
+                        }
                     }else{
-                        _onBlurMod  && $.each(_onBlurMod, function (key, vaj) {
-                            if(!vaj.isCustom){
-
-                                regFncBol = typeof vaj.regFnc =="function" ? vaj.regFnc(str) :vaj.regFnc;
-                                !regFncBol && typeof vaj.magsCall == "function" && vaj.magsCall($ValidateClass) ;
-
-                            }else{
-                                vaj.magsCall && vaj.magsCall($ValidateClass);
-                            }
-
-                            if(isCommit && !regFncBol){
-                                isCommit =!1
-                            }
-
-                            return regFncBol;
-                        });
-
+                        //console.log(va.stateCall())
+                        if(!va.stateCall() && isCommit){
+                            isCommit =!1
+                        }
                     }
-
                 });
 
                 isCommit ? _subSucceedCall(): _subErrorCall && _subErrorCall()
