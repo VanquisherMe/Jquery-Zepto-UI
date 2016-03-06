@@ -67,18 +67,21 @@
             $(_subClass).on("click",function(){
                     var submitIint=!0,$this=$(this),isCommit=!0;
                 $.each(_valObj,function(i , va){
-
+                    var $ValidateClass=$(va.ValidateClass);
                     if(va.isInput){
-                        var $ValidateClass=$(va.ValidateClass),
-                            regFncBol=!1,
+
+                        var regFncBol=!1,
                             str=$ValidateClass.val(),
                             _intBol = typeof va.isNull == "function" ? va.isNull(str) : va.isNull,
                             _onBlurMod = typeof  va.onBlurMod == "boolean" ? va.onBlurMod = !1 :va.onBlurMod;
                         console.log(_intBol)
 
                         if(_intBol){
-                            isCommit && (isCommit = !1)
-                            va.isNullCall($ValidateClass);
+                            if(va.isRequired){
+                                va.isNullCall($ValidateClass);
+                                isCommit && (isCommit = !1)
+                            }
+
                         }else{
                             _onBlurMod  && $.each(_onBlurMod, function (key, vaj) {
                                 if(!vaj.isCustom){
@@ -99,9 +102,13 @@
                         }
                     }else{
                         //console.log(va.stateCall())
-                        if(!va.stateCall() && isCommit){
-                            isCommit =!1
+                    //??????
+                        if(va.isRequired && !va.state($ValidateClass) ){
+                                isCommit =!1,
+                                    va.stateCall($ValidateClass)
                         }
+
+
                     }
                 });
 
