@@ -181,11 +181,11 @@ requirejs(['jquery','jquery.ui.switchable'],function($,switchable){
         contentPage:"tab-page",
         delay:0,
         callback:function(a ,b ,c){
-            console.log(a)
-            console.log(b)
+            //console.log(a)
+            //console.log(b)
 
             $.get(b.attr("data-get"),function(data){
-                console.log(data)
+                //console.log(data)
                 c.append(data)
             })
 

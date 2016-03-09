@@ -157,10 +157,10 @@
     };
     //切换入口
     Switchable.prototype.switchTo = function (_iNav, iMain) {
-        console.log(_iNav + "," + iMain)
+        //console.log(_iNav + "," + iMain)
         var _this = this, _op = _this.options;
         if ("undefined" == typeof _iNav || "undefined" == typeof iMain) {
-            console.log("\u7d22\u5f15\u4e0d\u662f\u4e00\u4e2a\u6570\u5b57")
+            //console.log("\u7d22\u5f15\u4e0d\u662f\u4e00\u4e2a\u6570\u5b57")
 
         } else {
             _this.switchNavTo(_iNav);
@@ -188,7 +188,7 @@
                     $nav=_this.nav.eq(e);
 
                 _op.seamlessLoop && _this.main.each(function() {
-                    console.log(e +"=="+  $(this).data("switchable-clone-from"))
+                    //console.log(e +"=="+  $(this).data("switchable-clone-from"))
                     return e == $(this).data("switchable-clone-from") ? ($(this).replaceWith($main.clone()),/* $main = $main.add($(this)),*/
                         !1) : void 0
                 }),
@@ -216,7 +216,7 @@
              break;*/
             default:
                 //选择类型有误
-                console.log("\u9009\u62e9\u7c7b\u578b\u6709\u8bef");
+                //console.log("\u9009\u62e9\u7c7b\u578b\u6709\u8bef");
         }
     };
     //默认选项卡 切换
