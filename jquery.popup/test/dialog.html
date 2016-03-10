@@ -3,8 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>dialog</title>
+    <link href="main.css" rel="stylesheet">
+    <script src="../../public/jquery.js"></script>
+    <script src="../../public/template-native-debug.js"></script>
+    <script src="../1.0.1/jquery.ui.layer.js"></script>
 </head>
 <body>
-    
+    <button id="da">弹出</button>
+    <script>
+        $(function(){
+           console.log(layer.open)
+            $("#da").on("click",function(){
+                layer.open({
+                    title:"这是一个弹出层"
+                })
+            });
+
+
+        })
+    </script>
 </body>
 </html>

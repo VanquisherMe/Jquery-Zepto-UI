@@ -12,36 +12,21 @@
         type: ['dialog', 'page', 'iframe', 'loading', 'tips'],
         btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;'],
         tpl:{
-            mask: '<div class="ui-mask"></div>',
-            close: '<a class="ui-dialog-close"><span class="ui-icon ui-icon-delete"></span></a>',
-            title: '<div class="ui-dialog-title"><span></span></div>',
-            wrap: '<div class="ui-dialog"></div>',
-            conten: '<div class="ui-dialog-content"></div>',
-            button: '<div class="ui-dialog-btn"><a class="ui-dialog-btn-submit"></a><a class="ui-dialog-btn-cancel"></a></div>'
+
+            close: '<a class="ui-layer-close"><span class="ui-icon ui-icon-delete"></span></a>', //关闭按钮
+            title: '<div class="ui-layer-title"><span><%=title%></span></div>',  //title
+            conten: '<div class="ui-layer-content"></div>',  //内容块
+            button: '<div class="ui-layer-btn"> <%if(submit){%><a class="ui-layer-btn-submit"><%=submit%></a><%}%> <%if(cancel){%><a class="ui-layer-btn-cancel"><%=cancel%></a><%}%></div>',
+            wrap: '<div class="ui-layer"></div>', // 包裹的容器
+            mask: '<div class="ui-layer-mask"></div>', //黑色遮罩层
+            tips: '<div class="ui-layer-tips"></div>'
         }
     };
     //默认内置方法。
 var layer = {
-    v: '2.1',
-    ie6: !!window.ActiveXObject && !window.XMLHttpRequest,
+    v: '1.0.0',
+    ie6: !!window.ActiveXObject && !window.XMLHttpRequest,  //判斷 ie6
     index: 0,
-
-    config: function(options, fn){
-        var item = 0;
-        options = options || {};
-        layer.cache = ready.config = $.extend(ready.config, options);
-        layer.path = ready.config.path || layer.path;
-        typeof options.extend === 'string' && (options.extend = [options.extend]);
-        layer.use('skin/layer.css', (options.extend && options.extend.length > 0) ? (function loop(){
-            var ext = options.extend;
-            layer.use(ext[ext[item] ? item : item-1], item < ext.length ? function(){
-                ++item;
-                return loop;
-            }() : fn);
-        }()) : fn);
-        return this;
-    },
-
     //载入配件
     use: function(module, fn, readyMethod){
         var i = 0, head = $('head')[0];
@@ -147,24 +132,43 @@ var layer = {
 };
 
 
-    var Classlayer = function(setings){
+    var Classlayer = function(options){
         var _this = this;
         //每次 new calsslayer 的时候 ++index,保持每一个 的弹出层的唯一性
         //这也是 close 时候的依据
         _this.index = ++layer.index;
-        _this.config = $.extend({}, _this.config, ready.config, setings);
+        _this.options = $.extend({}, _this.DEFAULTS, options);
         _this.creat();
     };
 
     Classlayer.pt = Classlayer.prototype;
 
-    Classlayer.pt.config = {
+    Classlayer.pt.DEFAULTS = {
+        // 是否有
+        main:!0,
+        content:!0,
+        title: !0,
+        mask:!0,
+        //设置 layer  tpl 的模板 类 ["id","aaaaa"] || ["calss","aaaaa"]
+        extendMainClass:null,
+        mainId:null,    //   'wrap' add class or id
+        contentId:null, //  'content' add class or id
+        titleId: null,  //  'title' add class or id
+        maskId:null,   //  'mask' add class or id
+        //  button
+        hasButton:!0,
+        submitButton: "\u786e\u8ba4",
+        cancelButton: "\u53d6\u6d88",
+
+        closeButton:!0,
+
+        target:"body",  //弹出层 的目标层
 
         type: 0, //
         shade: 0.3,
         fix: true,
-        move: doms[1],
-        title: '&#x4FE1;&#x606F;',
+        //move: doms[1],
+
         offset: 'auto',
         area: 'auto',
         closeBtn: 1,
@@ -177,16 +181,48 @@ var layer = {
         tips: 2
     };
 
-    //容器
-    Classlayer.pt.vessel=function(conType, callback){
-        var _this = this, times = that.index, config = that.config;
-        var zIndex = config.zIndex + times, titype = typeof config.title === 'object';
-
-    };
+    ////容器
+    //Classlayer.pt.vessel=function(conType, callback){
+    //    var _this = this, times = that.index, config = that.config;
+    //    var zIndex = config.zIndex + times,
+    //
+    //
+    //};
     //创建骨架
     Classlayer.pt.creat =function(){
+        var _this =this,
+            _op=_this.options,
+            _tpl=ready.tpl,titleHTML="";
+
+        //设置 title
+        _op.title && (titleHTML = template.compile(_tpl.title)({
+            title: _op.title
+        }));
+        //按钮层
+        var buttonHTML = template.compile(_tpl.button)({
+            submit: $.trim(_op.submitButton),
+            cancel: $.trim(_op.cancelButton)
+        });
+        var mainHTML =  titleHTML + _tpl.conten +(_op.hasButton ? buttonHTML : "");
+        // 内容填充
+        //_op.content &&  $(_tpl.content).children("span").html(_this.content);
+        //填充 button
+        _this.el = $(_tpl.wrap),
+        _op.extendMainClass && _this.el.addClass(_op.extendMainClass),
+            $(mainHTML).appendTo(_this.el),
+            _this.content = _this.el.find(".ui-layer-content"),
+            _this.title = _this.el.find(".ui-layer-title"),
+        _op.mainId && this.el.attr(_op.mainId[0],_op.mainId[1]),
+        _op.contentId && this.content.attr(_op.mainId[0],_op.mainId[1]),
+        _op.titleId && this.title.attr(_op.mainId[0], _op.mainId[1]),
+        _op.closeButton && this.el.append(_op.close);
+
+        _this.el.css({
+            position: (layer.ie6 || (_op.target != "body")) ? "absolute" : "fixed"
+        }).appendTo(_op.target)
 
     };
+
     /** 内置成员 */
     window.layer = layer;
 
@@ -195,16 +231,16 @@ var layer = {
     ready.run = function(){
         $ = jQuery;
         win = $(window);
-        tpl.html = $('html');
         layer.open = function(deliver){
-            var o = new Classdialog(deliver);
+            var o = new Classlayer(deliver);
+            console.log(o.index);
             return o.index;
         };
     };
     'function' === typeof define ? define(function(){
         ready.run();
-        return dialog;
+        return layer;
     }) : function(){
-        dialog.run();
+        ready.run();
     }();
 }(window);
