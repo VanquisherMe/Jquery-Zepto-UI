@@ -10,14 +10,15 @@
 
     var $,win,ready = {
         type: [
-            'dialog',
-            'page',
-            'iframe',
-            'loading',
-            'tips'],
+            'dialog',     //0
+            'page',      //1
+            'iframe',   //2
+            'loading', //3
+            'tips'    //4
+        ],
+        anim : ['layui-anim', 'layui-anim-01', 'layui-anim-02', 'layui-anim-03', 'layui-anim-04', 'layui-anim-05', 'layui-anim-06'],
         btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;'],
         tpl:{
-
             close: '<a class="ui-layer-close"><span class="ui-icon ui-icon-delete"></span></a>', //关闭按钮
             title: '<div class="ui-layer-title"><span><%=title%></span></div>',  //title
             conten: '<div class="ui-layer-content"></div>',  //内容块
@@ -162,8 +163,7 @@ var layer = {
         maskClass:null,   //  'mask' add class
         //  button
         hasButton:!0,
-        submitButton: "\u786e\u8ba4",
-        cancelButton: "\u53d6\u6d88",
+        submitButton: [ready.btn[0],ready.btn[1]],
 
         closeButton:!0,
 
@@ -187,18 +187,50 @@ var layer = {
     };
 
     ////容器
-    Classlayer.pt.creat =function(conType, callback){
-        //var _this = this, times = that.index, config = that.config,
 
-        this.vessel()
+    Classlayer.pt.creat =function(){
+        var _this = this, _op = _this.options, conType = typeof _op.content === 'object';
 
+        switch(_op.type){
+            case 0:
+                _op.btn = ('btn' in config) ? config.btn : ready.btn[0];
+                layer.closeAll('dialog');
+                break;
+            case 2:
+                var content = config.content = conType ? config.content : [config.content||'http://layer.layui.com', 'auto'];
+                _op.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times +'" onload="this.className=\'\';" class="layui-layer-load" frameborder="0" src="' + config.content[0] + '"></iframe>';
+                break;
+            case 3:
+                _op.title = false;
+                _op.closeBtn = false;
+                _op.icon === -1 && (config.icon === 0);
+                layer.closeAll('loading');
+                break;
+            case 4:
+                conType || (_op.content = [_op.content, 'body']);
+                _op.follow = _op.content[1];
+                _op.content = _op.content[0] + '<i class="layui-layer-TipsG"></i>';
+                _op.title = false;
+                _op.shade = false;
+                _op.fix = false;
+                _op.tips = typeof config.tips === 'object' ? config.tips : [config.tips, true];
+                _op.tipsMore || layer.closeAll('tips');
+                break;
+        }
+
+
+        this.vessel(conType)
     };
-    //创建骨架
-    Classlayer.pt.vessel =function(){
+
+    /**
+     * 创建骨架
+     * @conType    content 来源的类型
+     */
+    Classlayer.pt.vessel =function(conType ,callback){
         var _this =this,
             _op=_this.options,
             times = _this.index + _op.zIndex,
-            _tpl=ready.tpl,titleHTML="";
+            _tpl=ready.tpl,titleHTML="",buttonHTML="";
             _this.isInit = !1;
 
         //设置 title
@@ -206,12 +238,9 @@ var layer = {
             title: _op.title
         }));
         //按钮层
-        var buttonHTML = template.compile(_tpl.button)({
-            submit: $.trim(_op.submitButton),
-            cancel: $.trim(_op.cancelButton)
-        });
-
-
+        _op.hasButton &&  (buttonHTML = template.compile(_tpl.button)({
+            submit: _op.submitButton,
+        }));
 
         var mainHTML =  titleHTML + _tpl.conten +(_op.hasButton ? buttonHTML : "");
         // 内容填充
@@ -226,7 +255,11 @@ var layer = {
         _op.contentClass && _this.content.attr(_op.mainId[0],_op.mainId[1]),
         _op.titleClass && _this.title.attr(_op.mainId[0], _op.mainId[1]),
         _op.closeButton && _this.el.append(_op.close),
-        _this.el.attr({"times":_this.index,"id":"ui-layer"+_this.index});
+        _this.el.attr({
+            "times":_this.index,
+            "id":"ui-layer"+_this.index,
+            "conType":conType ? 'object': 'string'
+        });
 
         _this.el.css({
             display:"none",
