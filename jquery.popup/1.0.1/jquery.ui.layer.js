@@ -9,7 +9,12 @@
     "use strict";
 
     var $,win,ready = {
-        type: ['dialog', 'page', 'iframe', 'loading', 'tips'],
+        type: [
+            'dialog',
+            'page',
+            'iframe',
+            'loading',
+            'tips'],
         btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;'],
         tpl:{
 
@@ -149,12 +154,12 @@ var layer = {
         content:!0,
         title: !0,
         mask:!0,
-        //设置 layer  tpl 的模板 类 ["id","aaaaa"] || ["calss","aaaaa"]
+        //设置 layer  tpl 的模板 类  ["calss","aaaaa"]
         extendMainClass:null,
-        mainId:null,    //   'wrap' add class or id
-        contentId:null, //  'content' add class or id
-        titleId: null,  //  'title' add class or id
-        maskId:null,   //  'mask' add class or id
+        mainClassd:null,    //   'wrap' add class
+        contentClass:null, //  'content' add class
+        titleClass: null,  //  'title' add class
+        maskClass:null,   //  'mask' add class
         //  button
         hasButton:!0,
         submitButton: "\u786e\u8ba4",
@@ -182,17 +187,19 @@ var layer = {
     };
 
     ////容器
-    //Classlayer.pt.vessel=function(conType, callback){
-    //    var _this = this, times = that.index, config = that.config;
-    //    var zIndex = config.zIndex + times,
-    //
-    //
-    //};
+    Classlayer.pt.creat =function(conType, callback){
+        //var _this = this, times = that.index, config = that.config,
+
+        this.vessel()
+
+    };
     //创建骨架
-    Classlayer.pt.creat =function(){
+    Classlayer.pt.vessel =function(){
         var _this =this,
             _op=_this.options,
+            times = _this.index + _op.zIndex,
             _tpl=ready.tpl,titleHTML="";
+            _this.isInit = !1;
 
         //设置 title
         _op.title && (titleHTML = template.compile(_tpl.title)({
@@ -203,6 +210,9 @@ var layer = {
             submit: $.trim(_op.submitButton),
             cancel: $.trim(_op.cancelButton)
         });
+
+
+
         var mainHTML =  titleHTML + _tpl.conten +(_op.hasButton ? buttonHTML : "");
         // 内容填充
         //_op.content &&  $(_tpl.content).children("span").html(_this.content);
@@ -212,12 +222,15 @@ var layer = {
             $(mainHTML).appendTo(_this.el),
             _this.content = _this.el.find(".ui-layer-content"),
             _this.title = _this.el.find(".ui-layer-title"),
-        _op.mainId && this.el.attr(_op.mainId[0],_op.mainId[1]),
-        _op.contentId && this.content.attr(_op.mainId[0],_op.mainId[1]),
-        _op.titleId && this.title.attr(_op.mainId[0], _op.mainId[1]),
-        _op.closeButton && this.el.append(_op.close);
+        _op.mainClass && _this.el.attr(_op.mainId[0],_op.mainId[1]),
+        _op.contentClass && _this.content.attr(_op.mainId[0],_op.mainId[1]),
+        _op.titleClass && _this.title.attr(_op.mainId[0], _op.mainId[1]),
+        _op.closeButton && _this.el.append(_op.close),
+        _this.el.attr({"times":_this.index,"id":"ui-layer"+_this.index});
 
         _this.el.css({
+            display:"none",
+            zIndex:times,
             position: (layer.ie6 || (_op.target != "body")) ? "absolute" : "fixed"
         }).appendTo(_op.target)
 
@@ -226,6 +239,44 @@ var layer = {
     /** 内置成员 */
     window.layer = layer;
 
+    //关闭layer总方法
+    layer.close = function(index){
+        var layero = $('#ui-layer'+ index), type = layero.attr('type');
+        if(!layero[0]) return;
+        if(type === ready.type[1] && layero.attr('conType') === 'object'){
+            layero.children(':not(.'+ doms[5] +')').remove();
+            for(var i = 0; i < 2; i++){
+                layero.find('.layui-layer-wrap').unwrap().hide();
+            }
+        } else {
+            //低版本IE 回收 iframe
+            if(type === ready.type[2]){
+                try {
+                    var iframe = $('#'+doms[4]+index)[0];
+                    iframe.contentWindow.document.write('');
+                    iframe.contentWindow.close();
+                    layero.find('.'+doms[5])[0].removeChild(iframe);
+                } catch(e){}
+            }
+            layero[0].innerHTML = '';
+            layero.remove();
+        }
+        $('#layui-layer-moves, #layui-layer-shade' + index).remove();
+        layer.ie6 && ready.reselect();
+        ready.rescollbar(index);
+        $(document).off('keydown', ready.enter);
+        typeof ready.end[index] === 'function' && ready.end[index]();
+        delete ready.end[index];
+    };
+    //关闭所有层
+        layer.closeAll = function(type){
+            $('.ui-layer').each(function(){
+                var othis = $(this);
+                var is = type ? (othis.attr('type') === type) : 1;
+                is && layer.close(othis.attr('times'));
+                is = null;
+            });
+        };
 
     //主入口
     ready.run = function(){
