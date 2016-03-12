@@ -16,17 +16,25 @@
             'loading', //3
             'tips'    //4
         ],
+        dom:['ui-layer', 'ui-layer-title', 'ui-layer-content', '.layui-layer-main', '.layui-layer-dialog', 'layui-layer-iframe','ui-layer-wrap-btn', 'ui-layer-btn', 'layui-layer-close','ui-icon ui-icon-delete','ui-layer-tips','ui-layer-mask'],
         anim : ['layui-anim', 'layui-anim-01', 'layui-anim-02', 'layui-anim-03', 'layui-anim-04', 'layui-anim-05', 'layui-anim-06'],
-        btn: ['&#x786E;&#x5B9A;','&#x53D6;&#x6D88;'],
-        tpl:{
-            close: '<a class="ui-layer-close"><span class="ui-icon ui-icon-delete"></span></a>', //关闭按钮
-            title: '<div class="ui-layer-title"><span><%=title%></span></div>',  //title
-            conten: '<div class="ui-layer-content"></div>',  //内容块
-            button: '<div class="ui-layer-btn"> <%if(submit){%><a class="ui-layer-btn-submit"><%=submit%></a><%}%> <%if(cancel){%><a class="ui-layer-btn-cancel"><%=cancel%></a><%}%></div>',
-            wrap: '<div class="ui-layer"></div>', // 包裹的容器
-            mask: '<div class="ui-layer-mask"></div>', //黑色遮罩层
-            tips: '<div class="ui-layer-tips"></div>'
-        }
+        btn: ["\u786e\u8ba4","\u786e\u8ba4"]
+    };
+
+    var tpl={
+            close: '<a class="'+ready.dom[8]+'"><span class="'+ready.dom[9]+'"></span></a>', //关闭按钮
+            title: '<div class="'+ready.dom[1]+'"><span><%=title%></span></div>',  //title
+            content: '<div class="'+ready.dom[2]+'"><%=cont%></div>',  //内容块
+            button: '<div class="'+ready.dom[6]+'">' +
+                        '<%if(submit){%> ' +
+                            '<%for(var i = 0; i < submit.length; i ++) {%>' +
+                            '<a class="'+ready.dom[7]+'"><%=submit[i]%></a>' +
+                            '<%}%> ' +
+                        '<%}%>'+
+                    '</div>',
+            wrap: '<div class="'+ready.dom[0]+'"></div>', // 包裹的容器
+            mask: '<div class="'+ready.dom[11]+'"></div>', //黑色遮罩层
+            tips: '<div class="'+ready.dom[10]+'"></div>' //tips 层
     };
     //默认内置方法。
 var layer = {
@@ -74,6 +82,7 @@ var layer = {
         if(type) yes = options;
         return layer.open($.extend({
             content: content,
+            submitButton: [ready.btn[0]],
             yes: yes
         }, type ? {} : options));
     },
@@ -84,9 +93,10 @@ var layer = {
             cancel = yes;
             yes = options;
         }
+
         return layer.open($.extend({
             content: content,
-            btn: ready.btn,
+            submitButton: [ready.btn[0] ,ready.btn[1]],
             yes: yes,
             cancel: cancel
         }, type ? {} : options));
@@ -162,8 +172,10 @@ var layer = {
         titleClass: null,  //  'title' add class
         maskClass:null,   //  'mask' add class
         //  button
-        hasButton:!0,
-        submitButton: [ready.btn[0],ready.btn[1]],
+        //hasButton:!0,
+        submitButton: [ready.btn[0]],
+        yes:null,
+        cancel:null,
 
         closeButton:!0,
 
@@ -190,17 +202,17 @@ var layer = {
 
     Classlayer.pt.creat =function(){
         var _this = this, _op = _this.options, conType = typeof _op.content === 'object';
-
+        console.log(_op)
         switch(_op.type){
             case 0:
-                _op.btn = ('btn' in config) ? config.btn : ready.btn[0];
+                //_op.submitButton = _op.submitButton || ready.btn[0];
                 layer.closeAll('dialog');
                 break;
             case 2:
                 var content = config.content = conType ? config.content : [config.content||'http://layer.layui.com', 'auto'];
                 _op.content = '<iframe scrolling="'+ (config.content[1]||'auto') +'" allowtransparency="true" id="'+ doms[4] +''+ times +'" name="'+ doms[4] +''+ times +'" onload="this.className=\'\';" class="layui-layer-load" frameborder="0" src="' + config.content[0] + '"></iframe>';
                 break;
-            case 3:
+            /*case 3:
                 _op.title = false;
                 _op.closeBtn = false;
                 _op.icon === -1 && (config.icon === 0);
@@ -215,7 +227,7 @@ var layer = {
                 _op.fix = false;
                 _op.tips = typeof config.tips === 'object' ? config.tips : [config.tips, true];
                 _op.tipsMore || layer.closeAll('tips');
-                break;
+                break;*/
         }
 
 
@@ -230,21 +242,27 @@ var layer = {
         var _this =this,
             _op=_this.options,
             times = _this.index + _op.zIndex,
-            _tpl=ready.tpl,titleHTML="",buttonHTML="";
+            _tpl=tpl,titleHTML="",buttonHTML="",contenHTML="";
             _this.isInit = !1;
 
-        //设置 title
+        //title层
         _op.title && (titleHTML = template.compile(_tpl.title)({
             title: _op.title
         }));
         //按钮层
-        _op.hasButton &&  (buttonHTML = template.compile(_tpl.button)({
-            submit: _op.submitButton,
+        _op.submitButton &&  (buttonHTML = template.compile(_tpl.button)({
+            submit: _op.submitButton
         }));
+        //内容层
+        _op.content && (contenHTML = template.compile(_tpl.content)({
+            cont: _op.content
+        }));
+        console.log(_op.content)
+        console.log(contenHTML)
 
-        var mainHTML =  titleHTML + _tpl.conten +(_op.hasButton ? buttonHTML : "");
+        var mainHTML =  titleHTML + contenHTML +(_op.submitButton ? buttonHTML : "");
         // 内容填充
-        //_op.content &&  $(_tpl.content).children("span").html(_this.content);
+
         //填充 button
         _this.el = $(_tpl.wrap),
         _op.extendMainClass && _this.el.addClass(_op.extendMainClass),
@@ -262,7 +280,7 @@ var layer = {
         });
 
         _this.el.css({
-            display:"none",
+            //display:"none",
             zIndex:times,
             position: (layer.ie6 || (_op.target != "body")) ? "absolute" : "fixed"
         }).appendTo(_op.target)
@@ -274,7 +292,7 @@ var layer = {
 
     //关闭layer总方法
     layer.close = function(index){
-        var layero = $('#ui-layer'+ index), type = layero.attr('type');
+        var layero = $('.'+ ready.dom[0]+ index), type = layero.attr('type');
         if(!layero[0]) return;
         if(type === ready.type[1] && layero.attr('conType') === 'object'){
             layero.children(':not(.'+ doms[5] +')').remove();

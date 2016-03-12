@@ -11,14 +11,25 @@
 <body>
     <button id="da">弹出</button>
 
-    <div style="background-color: #2e8ded; width: 100px; height: 100px;"></div>
+    <!--<div style="background-color: #2e8ded; width: 100px; height: 100px;"></div>-->
     <script>
         $(function(){
            console.log(layer.open)
             $("#da").on("click",function(){
                 layer.open({
-                    title:"这是一个弹出层"
-                })
+                    title:"这是一个弹出层",
+//                    submitButton:!1
+                });
+
+               /* layer.alert("1111111111111111",function(){
+                    alert("a")
+                })*/
+
+                /*layer.confirm("dddddddddddddddddddddddd",function(){
+                    alert("a")
+                },function(){
+                    alert("b")
+                })*/
             });
 
 
