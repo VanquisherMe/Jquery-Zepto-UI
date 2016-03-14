@@ -251,8 +251,7 @@ var layer = {
         }));
         //按钮层
         _op.submitButton &&  (buttonHTML = template.compile(_tpl.button)({
-            submit: _op.submitButton
-        }));
+          }));
         //内容层
         _op.content && (contenHTML = template.compile(_tpl.content)({
             cont: _op.content
