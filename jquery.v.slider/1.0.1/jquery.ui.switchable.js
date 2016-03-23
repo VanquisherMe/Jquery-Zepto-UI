@@ -433,7 +433,7 @@
             }) : null != h && "top" == _op.direction && $content.css({
                 top: h
             });
-        //alert(w)
+        alert(w)
     };
     Switchable.prototype.autoPlay = function () {
         var _this = this;
